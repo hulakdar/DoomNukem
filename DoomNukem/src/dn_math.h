@@ -1,4 +1,6 @@
 #pragma once
+#include <stdbool.h>
+#include <math.h>
 
 typedef struct s_vec2
 {
@@ -25,12 +27,14 @@ typedef t_line t_box;
 #define CLAMP(a, mi, ma)  min(max(a, mi), ma)
 
 /* Helper macro. Hate norm */
-#define LESS(a0, a1, b0, b1) (MIN(a0, a1) <= MAX(b0, b1))
+#define LESS(a0, a1, b0, b1) (min(a0, a1) <= max(b0, b1))
 /* Checks for 2 ranges overlap */
 #define OVERLAP(a0, a1, b0, b1) (LESS(a0, a1, b0, b1) && LESS(b0, b1, a0, a1))
 
+#define CROSS(x0,y0, x1,y1)    ((x0)*(y1) - (x1)*(y0))   // vxs: Vector cross product
+
 /* Check whether 2 boxes intersect */
-bool	boxes_intersect(t_box a, t_box b);
+char	boxes_intersect(t_box a, t_box b);
 
 /* Figure out on which side of the line the point is */
 char	determine_side(t_vec2 point, t_line line);
