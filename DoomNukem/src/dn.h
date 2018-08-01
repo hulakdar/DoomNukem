@@ -6,9 +6,7 @@
 
 #include <stdlib.h>
 #include "dn_math.h"
-
-#include <SDL.h>
-#undef main
+#include "dn_rendering.h"
 
 /* Numbers are arbitrary */
 #define W 608
@@ -21,11 +19,7 @@
 #define HFOV (0.73f * H)
 #define VFOV (.2f * H)
 
-/* Checks for 2 boxes overlap */
-#define BOVERLAP(a0, b0, a1, b1, a2, b2, a3, b3) (OVERLAP(a0, a1, a2, a3))
-
-
-typedef struct s_sector
+typedef struct	s_sector
 {
 	float		floor;
 	float		ceil;
@@ -34,7 +28,7 @@ typedef struct s_sector
 	char		*neighbors;
 }				t_sector;
 
-typedef struct s_player
+typedef struct	s_player
 {
 	t_vec3	position;
 	t_vec3	velocity;
@@ -44,3 +38,16 @@ typedef struct s_player
 	float	yaw;
 	int		sector;
 }				t_player;
+
+typedef struct	s_game_state
+{
+	t_render_state	renderer;
+	t_player		player;
+	t_sector		*sectors;
+
+}				t_game_state;
+
+/* 
+** Pretty self-explanatory.
+*/
+/* void draw_line_single_color(int x, int y1, int y2, int color); */

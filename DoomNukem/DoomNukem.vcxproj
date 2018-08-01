@@ -128,7 +128,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\dn.c" />
+    <ClCompile Include="src\dn_math.c" />
+    <ClCompile Include="src\dn_rendering.c" />
     <ClCompile Include="src\main.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\dn.h" />
+    <ClInclude Include="src\dn_math.h" />
+    <ClInclude Include="src\dn_rendering.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
