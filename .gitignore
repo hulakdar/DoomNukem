@@ -50,3 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+*.log
+.vs/DoomNukem/v15/.suo
+.vs/DoomNukem/v15/Browse.VC.db
+.vs/DoomNukem/v15/Solution.VC.db-shm
+.vs/DoomNukem/v15/Solution.VC.db
+.vs/DoomNukem/v15/ipch/AutoPCH/d96ee5c0202ab8ce/DN.ipch
+.vs/DoomNukem/v15/Browse.VC.opendb
