@@ -8,8 +8,14 @@ bool boxes_intersect(t_box first, t_box second)
 
 char determine_side(t_vec2 point, t_line line)
 {
-	return (CROSS(line.b.x - line.a.x, line.b.y - line.a.y,
-		point.x - line.a.x, point.y - line.a.y));
+	const float result = CROSS(line.b.x - line.a.x, line.b.y - line.a.y,
+		point.x - line.a.x, point.y - line.a.y);
+
+	if (result == 0.f)
+		return (0);
+	else if (result > 0)
+		return 1;
+	return -1;
 }
 
 t_vec2 line_intersection(t_line one, t_line two)

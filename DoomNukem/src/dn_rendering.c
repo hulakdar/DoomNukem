@@ -1,5 +1,5 @@
 #include "dn_rendering.h"
-#include <corecrt_io.h>
+#include "dn_io.h"
 
 int init_render_state(t_render_state *renderer)
 {
@@ -10,8 +10,8 @@ int init_render_state(t_render_state *renderer)
 			SDL_CreateRenderer(renderer->window, -1, SDL_RENDERER_ACCELERATED)))
 	{
 		char message[] = "failed to initialize SDL";
-		_write(2, message, sizeof(message));
-		return (0);
+		ERROR(message);
+		return (1);
 	}
 	SDL_RenderSetLogicalSize(renderer->renderer, renderer->w, renderer->h);
 	renderer->pixels = malloc(sizeof(int) * (renderer->w * renderer->h));

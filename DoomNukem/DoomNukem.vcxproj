@@ -70,10 +70,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IntDir>$(SolutionDir)Intermidiates\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)bin\Intermidiates\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IntDir>$(SolutionDir)Intermidiates\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)bin\Intermidiates\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -89,11 +91,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\dev\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\dev\SDL2\include;$(SolutionDir)DoomNukem\libft\include;C:\dev\pthread\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\dev\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\dev\SDL2\lib\x64;C:\dev\pthread\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -118,25 +120,110 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\dev\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\dev\SDL2\include;$(SolutionDir)DoomNukem\libft\include;C:\dev\pthread\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\dev\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\dev\SDL2\lib\x64;C:\dev\pthread\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;pthreadVC2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="libft\ft_atoi.c" />
+    <ClCompile Include="libft\ft_atoi_base.c" />
+    <ClCompile Include="libft\ft_bzero.c" />
+    <ClCompile Include="libft\ft_isalnum.c" />
+    <ClCompile Include="libft\ft_isalpha.c" />
+    <ClCompile Include="libft\ft_isascii.c" />
+    <ClCompile Include="libft\ft_isdigit.c" />
+    <ClCompile Include="libft\ft_islower.c" />
+    <ClCompile Include="libft\ft_isprint.c" />
+    <ClCompile Include="libft\ft_isupper.c" />
+    <ClCompile Include="libft\ft_itoa.c" />
+    <ClCompile Include="libft\ft_lstadd.c" />
+    <ClCompile Include="libft\ft_lstdel.c" />
+    <ClCompile Include="libft\ft_lstdelone.c" />
+    <ClCompile Include="libft\ft_lstiter.c" />
+    <ClCompile Include="libft\ft_lstmap.c" />
+    <ClCompile Include="libft\ft_lstnew.c" />
+    <ClCompile Include="libft\ft_lstprint.c" />
+    <ClCompile Include="libft\ft_memalloc.c" />
+    <ClCompile Include="libft\ft_memccpy.c" />
+    <ClCompile Include="libft\ft_memchr.c" />
+    <ClCompile Include="libft\ft_memcmp.c" />
+    <ClCompile Include="libft\ft_memcpy.c" />
+    <ClCompile Include="libft\ft_memdel.c" />
+    <ClCompile Include="libft\ft_memmove.c" />
+    <ClCompile Include="libft\ft_memset.c" />
+    <ClCompile Include="libft\ft_putchar.c" />
+    <ClCompile Include="libft\ft_putchar_fd.c" />
+    <ClCompile Include="libft\ft_putendl.c" />
+    <ClCompile Include="libft\ft_putendl_fd.c" />
+    <ClCompile Include="libft\ft_putnbr.c" />
+    <ClCompile Include="libft\ft_putnbr_fd.c" />
+    <ClCompile Include="libft\ft_putstr.c" />
+    <ClCompile Include="libft\ft_putstr_fd.c" />
+    <ClCompile Include="libft\ft_puttab.c" />
+    <ClCompile Include="libft\ft_put_size_t.c" />
+    <ClCompile Include="libft\ft_quickmove.c" />
+    <ClCompile Include="libft\ft_sort.c" />
+    <ClCompile Include="libft\ft_strcat.c" />
+    <ClCompile Include="libft\ft_strchr.c" />
+    <ClCompile Include="libft\ft_strclr.c" />
+    <ClCompile Include="libft\ft_strcmp.c" />
+    <ClCompile Include="libft\ft_strcpy.c" />
+    <ClCompile Include="libft\ft_strdel.c" />
+    <ClCompile Include="libft\ft_strdup.c" />
+    <ClCompile Include="libft\ft_strequ.c" />
+    <ClCompile Include="libft\ft_striter.c" />
+    <ClCompile Include="libft\ft_striteri.c" />
+    <ClCompile Include="libft\ft_strjoin.c" />
+    <ClCompile Include="libft\ft_strlcat.c" />
+    <ClCompile Include="libft\ft_strlen.c" />
+    <ClCompile Include="libft\ft_strmap.c" />
+    <ClCompile Include="libft\ft_strmapi.c" />
+    <ClCompile Include="libft\ft_strncat.c" />
+    <ClCompile Include="libft\ft_strncmp.c" />
+    <ClCompile Include="libft\ft_strncpy.c" />
+    <ClCompile Include="libft\ft_strnequ.c" />
+    <ClCompile Include="libft\ft_strnew.c" />
+    <ClCompile Include="libft\ft_strnstr.c" />
+    <ClCompile Include="libft\ft_strrchr.c" />
+    <ClCompile Include="libft\ft_strsplit.c" />
+    <ClCompile Include="libft\ft_strstr.c" />
+    <ClCompile Include="libft\ft_strsub.c" />
+    <ClCompile Include="libft\ft_strtrim.c" />
+    <ClCompile Include="libft\ft_tabcount.c" />
+    <ClCompile Include="libft\ft_tabdel.c" />
+    <ClCompile Include="libft\ft_tolower.c" />
+    <ClCompile Include="libft\ft_toupper.c" />
+    <ClCompile Include="libft\ft_vectordel.c" />
+    <ClCompile Include="libft\ft_vectordestruct.c" />
+    <ClCompile Include="libft\ft_vectorget.c" />
+    <ClCompile Include="libft\ft_vectorinit.c" />
+    <ClCompile Include="libft\ft_vectornew.c" />
+    <ClCompile Include="libft\ft_vectorset.c" />
+    <ClCompile Include="libft\ft_vec_popback.c" />
+    <ClCompile Include="libft\ft_vec_popfront.c" />
+    <ClCompile Include="libft\ft_vec_pushback.c" />
+    <ClCompile Include="libft\get_next_line.c" />
     <ClCompile Include="src\dn.c" />
+    <ClCompile Include="src\dn_events.c" />
+    <ClCompile Include="src\dn_io.c" />
     <ClCompile Include="src\dn_math.c" />
     <ClCompile Include="src\dn_rendering.c" />
+    <ClCompile Include="src\dn_threads.c" />
     <ClCompile Include="src\main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="libft\include\libft.h" />
     <ClInclude Include="src\dn.h" />
+    <ClInclude Include="src\dn_events.h" />
+    <ClInclude Include="src\dn_io.h" />
     <ClInclude Include="src\dn_math.h" />
     <ClInclude Include="src\dn_rendering.h" />
+    <ClInclude Include="src\dn_threads.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
