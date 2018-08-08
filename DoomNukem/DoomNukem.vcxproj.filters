@@ -27,6 +27,249 @@
     <ClCompile Include="src\dn_rendering.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="libft\get_next_line.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_atoi.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_atoi_base.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_bzero.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_isalnum.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_isalpha.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_isascii.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_isdigit.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_islower.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_isprint.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_isupper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_itoa.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_lstadd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_lstdel.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_lstdelone.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_lstiter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_lstmap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_lstnew.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_lstprint.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memalloc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memccpy.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memchr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memcmp.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memcpy.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memdel.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memmove.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_memset.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_put_size_t.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putchar.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putchar_fd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putendl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putendl_fd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putnbr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putnbr_fd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putstr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_putstr_fd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_puttab.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_quickmove.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_sort.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strcat.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strchr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strclr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strcmp.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strcpy.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strdel.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strdup.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strequ.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_striter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_striteri.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strjoin.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strlcat.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strlen.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strmap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strmapi.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strncat.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strncmp.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strncpy.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strnequ.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strnew.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strnstr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strrchr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strsplit.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strstr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strsub.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_strtrim.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_tabcount.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_tabdel.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_tolower.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_toupper.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vec_popback.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vec_popfront.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vec_pushback.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vectordel.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vectordestruct.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vectorget.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vectorinit.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vectornew.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vectorset.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dn_io.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dn_events.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dn_threads.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dn.h">
@@ -36,6 +279,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\dn_rendering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dn_io.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libft\include\libft.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dn_events.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dn_threads.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
