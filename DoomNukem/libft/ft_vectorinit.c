@@ -22,7 +22,7 @@ void	ft_vectorinit(t_vector *dynarr, size_t size, size_t init)
 		new_size = new_size << 1;
 	dynarr->array = ft_memalloc(new_size * size);
 	dynarr->last = new_size - 1;
-	dynarr->size = size;
+	dynarr->size_of_type = size;
 	dynarr->back = 0;
 	dynarr->front = 0;
 }

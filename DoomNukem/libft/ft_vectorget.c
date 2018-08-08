@@ -15,6 +15,6 @@
 void		*ft_vectorget(t_vector *dynarr, size_t index)
 {
 	if (dynarr && dynarr->array && index <= dynarr->last)
-		return (dynarr->array + (dynarr->size * index));
+		return (dynarr->array + (dynarr->size_of_type * index));
 	return (NULL);
 }

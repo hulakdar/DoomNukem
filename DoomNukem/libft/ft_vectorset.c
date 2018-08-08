@@ -20,16 +20,16 @@ void	*ft_vectorset(t_vector *vect, size_t index, void *content)
 
 	if (!vect)
 		return (NULL);
-	size = vect->size;
+	size = vect->size_of_type;
 	if (index > vect->last)
 	{
 		new_size = vect->last + 1;
 		while (new_size < index + 2)
 			new_size <<= 1;
-		newarr = ft_memalloc(new_size * vect->size);
+		newarr = ft_memalloc(new_size * vect->size_of_type);
 		if (vect->array)
 		{
-			ft_quickmove(newarr, vect->array, (vect->last + 1) * vect->size);
+			ft_quickmove(newarr, vect->array, (vect->last + 1) * vect->size_of_type);
 			free(vect->array);
 		}
 		vect->array = newarr;

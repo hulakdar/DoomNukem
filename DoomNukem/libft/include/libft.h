@@ -42,7 +42,7 @@ typedef struct		s_list
 typedef struct		s_vector
 {
 	unsigned char	*array;
-	size_t			size;
+	size_t			size_of_type;
 	size_t			last;
 	size_t			count;
 	size_t			back;

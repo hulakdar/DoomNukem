@@ -22,7 +22,7 @@ void	ft_vectordestruct(t_vector *ptr)
 	cunt = 0;
 	while (cunt < ptr->back)
 	{
-		if ((content = *(void **)(ptr->array + cunt * ptr->size)))
+		if ((content = *(void **)(ptr->array + cunt * ptr->size_of_type)))
 			free(content);
 		cunt++;
 	}

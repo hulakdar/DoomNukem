@@ -3,21 +3,29 @@
 #include <math.h>
 #include <stdlib.h>
 
-typedef struct s_vec2
-{
-	float	x;
-	float	y;
-}				t_vec2;
+/*
+** Helper macros
+*/
+#define VEC2(type) struct s_vec2##type{type x;type y;}
+#define VEC3(type) struct s_vec3##type{type x;type y;type z;}
+#define VEC4(type) struct s_vec3##type{type x;type y;type z; type w;}
 
 /*
-** May be useless but i declared it anyway. 
+** "Templated" structs
 */
-typedef struct s_vec3
-{
-	float	x;
-	float	y;
-	float	z;
-}				t_vec3;
+#define DECL_VEC2(type, name) typedef VEC2(type) name;
+#define DECL_VEC3(type, name) typedef VEC3(type) name;
+#define DECL_VEC4(type, name) typedef VEC4(type) name;
+
+/*
+** If you need another vector type (2d or 3d), just add another macro here
+** Cool, right?
+*/
+DECL_VEC2(int, t_vec2i)
+DECL_VEC2(short, t_vec2s)
+DECL_VEC2(float, t_vec2)
+DECL_VEC3(float, t_vec3)
+DECL_VEC3(char, t_vec3c)
 
 typedef struct s_line
 {
