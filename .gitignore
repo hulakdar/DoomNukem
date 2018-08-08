@@ -59,3 +59,4 @@ dkms.conf
 .vs/DoomNukem/v15/Solution.VC.db
 .vs/DoomNukem/v15/ipch/AutoPCH/d96ee5c0202ab8ce/DN.ipch
 .vs/DoomNukem/v15/Browse.VC.opendb
+*.ipch
