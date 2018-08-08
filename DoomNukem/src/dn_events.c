@@ -1,7 +1,7 @@
 #include "dn_events.h"
 #include "dn.h"
 
-void event_handler(t_game_state *game_state)
+void event_handler(struct s_game_state *game_state)
 {
 	SDL_Event e;
 

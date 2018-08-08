@@ -12,5 +12,5 @@ int init_game_state(t_game_state *game_state)
 void game_loop(t_game_state *game_state)
 {
 	while (true)
-		SDL_RenderPresent(game_state->render_state.renderer);
+		Sleep(2);
 }
