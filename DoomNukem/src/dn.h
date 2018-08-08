@@ -36,11 +36,19 @@
 /*
 **	One sector of the map. Should be convex(!!!)
 */
+
+typedef struct	s_wall
+{
+	short		point1;
+	short		point2;
+	short		next_wall;
+	short		next_sector;
+}				t_wall;
+
 typedef struct	s_sector
 {
-	float		floor;
-	float		ceil;
-	t_vector	vertecies;
+	char		wall_number;
+	short		start_wall;
 }				t_sector;
 
 typedef struct	s_player
