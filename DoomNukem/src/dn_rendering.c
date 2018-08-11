@@ -33,23 +33,21 @@ void init_renderer(t_render_state *render_state)
 {
 	render_state->renderer =
 		SDL_CreateRenderer(render_state->window, -1, SDL_RENDERER_ACCELERATED);
-	SDL_RenderSetLogicalSize(render_state->renderer, render_state->w, render_state->h);
+	//SDL_RenderSetLogicalSize(render_state->renderer, render_state->w, render_state->h);
 	render_state->pixels = ft_memalloc(sizeof(int) * (render_state->w * render_state->h));
 	render_state->back_buffer = SDL_CreateTexture(render_state->renderer,
-	SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, render_state->w, render_state->h);
+	SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, render_state->w, render_state->h);
 }
 
 void	draw_loop(struct s_game_state *game_state)
 {
-	static int i = 10;
 	init_renderer(&game_state->render_state);
 	while (true)
 	{
-		t_simple_vline line = { i, 100, 200, 0xFFFF};
-		draw_vline((RENDERABLE)game_state, line);
-		i++;
+		t_simple_vline line = { game_state->last_time % (game_state->render_state.w - 1), 100, 400, 0xFFFF};
+		draw_vline((RENDER_TARGET)game_state, line);
 
-		SDL_UpdateTexture(game_state->render_state.back_buffer, NULL, game_state->render_state.pixels, game_state->render_state.h);
+		SDL_UpdateTexture(game_state->render_state.back_buffer, NULL, game_state->render_state.pixels, game_state->render_state.w * 4);
 		SDL_RenderCopy(game_state->render_state.renderer, game_state->render_state.back_buffer, NULL, NULL);
 		SDL_RenderPresent(game_state->render_state.renderer);
 		vsync(game_state);

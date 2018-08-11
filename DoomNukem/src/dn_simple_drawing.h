@@ -1,6 +1,5 @@
 #pragma once
 
-#define RENDERABLE t_renderable *
 
 typedef struct	s_simple_vline 
 {
