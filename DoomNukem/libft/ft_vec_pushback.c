@@ -14,6 +14,6 @@
 
 void	ft_vec_pushback(t_vector *vector, void *content)
 {
-	ft_vectorset(vector, vector->back, content);
+	ft_vec_set(vector, vector->back, content);
 	vector->back++;
 }

@@ -33,6 +33,7 @@ t_vec2 line_intersection(t_line one, t_line two)
 		two.a.y - two.b.y
 	};
 	const float delimiter = CROSS(sub_one.x, sub_one.y, sub_two.x, sub_two.y);
+
 	return ((t_vec2) {
 		CROSS(cross.x, sub_one.x, cross.y, sub_two.x) / delimiter,
 		CROSS(cross.x, sub_one.y, cross.y, sub_two.y) / delimiter

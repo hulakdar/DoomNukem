@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vectorinit.c                                    :+:      :+:    :+:   */
+/*   ft_vectorget.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skamoza <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/20 13:31:48 by skamoza           #+#    #+#             */
-/*   Updated: 2018/01/08 16:10:42 by skamoza          ###   ########.fr       */
+/*   Created: 2017/10/24 19:13:13 by skamoza           #+#    #+#             */
+/*   Updated: 2017/12/05 12:22:43 by skamoza          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_vectorinit(t_vector *dynarr, size_t size, size_t init)
+void		*ft_vec_get(t_vector *dynarr, size_t index)
 {
-	size_t		new_size;
-
-	ft_bzero(dynarr, sizeof(t_vector));
-	new_size = 32;
-	while (init * size > new_size)
-		new_size = new_size << 1;
-	dynarr->array = ft_memalloc(new_size * size);
-	dynarr->last = new_size - 1;
-	dynarr->size_of_type = size;
-	dynarr->back = 0;
-	dynarr->front = 0;
+	if (dynarr && dynarr->array && index <= dynarr->last)
+		return (dynarr->array + (dynarr->size_of_type * index));
+	return (NULL);
 }

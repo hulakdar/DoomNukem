@@ -111,16 +111,17 @@ void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 void				ft_lstprint(t_list *list);
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-t_vector			ft_vectornew(size_t size, size_t init);
-void				*ft_vectorget(t_vector *vector, size_t index);
-void				*ft_vectorset(t_vector *vector, size_t index,
+t_vector			ft_vec_new(size_t size, size_t init);
+void				*ft_vec_get(t_vector *vector, size_t index);
+void				*ft_vec_set(t_vector *vector, size_t index,
 															void *content);
-void				ft_vectordel(t_vector *vector);
-void				ft_vectorinit(t_vector *dynarr, size_t size, size_t index);
-void				ft_vectordestruct(t_vector *ptr);
+void				ft_vec_del(t_vector *vector);
+void				ft_vec_init(t_vector *dynarr, size_t size, size_t index);
+void				ft_vec_destruct(t_vector *ptr);
 void				ft_vec_pushback(t_vector *vector, void *content);
 void				*ft_vec_popback(t_vector *vector);
 void				*ft_vec_popfront(t_vector *vector);
+void				ft_vec_for_each(t_vector *vector, void (*function)(void *));
 void				*ft_quickmove(void *dst, void *src, size_t size);
 int					ft_atoi_base(const char *str, int base);
 void				ft_tabdel(char ***hint);

@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vectorpopback.c                                 :+:      :+:    :+:   */
+/*   ft_vectorinit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skamoza <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/30 15:24:24 by skamoza           #+#    #+#             */
-/*   Updated: 2018/01/08 20:48:37 by skamoza          ###   ########.fr       */
+/*   Created: 2017/11/20 13:31:48 by skamoza           #+#    #+#             */
+/*   Updated: 2018/01/08 16:10:42 by skamoza          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_vec_popback(t_vector *vect)
+void	ft_vec_init(t_vector *dynarr, size_t size, size_t init)
 {
-	if (!vect->back)
-		return (NULL);
-	return (ft_vec_get(vect, --vect->back));
+	size_t		new_size;
+
+	ft_bzero(dynarr, sizeof(t_vector));
+	new_size = 32;
+	while (init * size > new_size)
+		new_size = new_size << 1;
+	dynarr->array = ft_memalloc(new_size * size);
+	dynarr->last = new_size - 1;
+	dynarr->size_of_type = size;
+	dynarr->back = 0;
+	dynarr->front = 0;
 }

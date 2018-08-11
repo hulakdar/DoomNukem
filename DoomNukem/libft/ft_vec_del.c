@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-void	ft_vectordel(t_vector *vector)
+void	ft_vec_del(t_vector *vector)
 {
 	if (vector && vector->array)
 	{

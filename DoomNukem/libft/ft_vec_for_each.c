@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vectordestruct.c                                :+:      :+:    :+:   */
+/*   ft_vectorpopfront.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skamoza <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/25 14:23:15 by skamoza           #+#    #+#             */
-/*   Updated: 2018/01/08 20:39:58 by skamoza          ###   ########.fr       */
+/*   Created: 2018/01/08 16:10:00 by skamoza           #+#    #+#             */
+/*   Updated: 2018/01/08 20:48:51 by skamoza          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_vectordestruct(t_vector *ptr)
+void ft_vec_for_each(t_vector *vector, void (*function)(void *))
 {
-	size_t		cunt;
-	void		*content;
+	size_t i;
 
-	if (!ptr)
-		return ;
-	cunt = 0;
-	while (cunt < ptr->back)
-	{
-		if ((content = *(void **)(ptr->array + cunt * ptr->size_of_type)))
-			free(content);
-		cunt++;
-	}
-	ft_vectordel(ptr);
+	i = 0;
+	while (i < vector->back)
+		function(&vector->array[i++ * vector->size_of_type]);
 }

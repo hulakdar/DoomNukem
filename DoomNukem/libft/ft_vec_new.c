@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vectorget.c                                     :+:      :+:    :+:   */
+/*   ft_vectornew.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skamoza <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/24 19:13:13 by skamoza           #+#    #+#             */
-/*   Updated: 2017/12/05 12:22:43 by skamoza          ###   ########.fr       */
+/*   Created: 2017/10/24 19:16:02 by skamoza           #+#    #+#             */
+/*   Updated: 2018/01/08 15:23:34 by skamoza          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		*ft_vectorget(t_vector *dynarr, size_t index)
+t_vector	ft_vec_new(size_t size, size_t init)
 {
-	if (dynarr && dynarr->array && index <= dynarr->last)
-		return (dynarr->array + (dynarr->size_of_type * index));
-	return (NULL);
+	t_vector	dynarr;
+
+	ft_vec_init(&dynarr, size, init);
+	return (dynarr);
 }

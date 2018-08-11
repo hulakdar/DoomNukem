@@ -198,12 +198,13 @@
     <ClCompile Include="libft\ft_tabdel.c" />
     <ClCompile Include="libft\ft_tolower.c" />
     <ClCompile Include="libft\ft_toupper.c" />
-    <ClCompile Include="libft\ft_vectordel.c" />
-    <ClCompile Include="libft\ft_vectordestruct.c" />
-    <ClCompile Include="libft\ft_vectorget.c" />
-    <ClCompile Include="libft\ft_vectorinit.c" />
-    <ClCompile Include="libft\ft_vectornew.c" />
-    <ClCompile Include="libft\ft_vectorset.c" />
+    <ClCompile Include="libft\ft_vec_del.c" />
+    <ClCompile Include="libft\ft_vec_destruct.c" />
+    <ClCompile Include="libft\ft_vec_for_each.c" />
+    <ClCompile Include="libft\ft_vec_get.c" />
+    <ClCompile Include="libft\ft_vec_init.c" />
+    <ClCompile Include="libft\ft_vec_new.c" />
+    <ClCompile Include="libft\ft_vec_set.c" />
     <ClCompile Include="libft\ft_vec_popback.c" />
     <ClCompile Include="libft\ft_vec_popfront.c" />
     <ClCompile Include="libft\ft_vec_pushback.c" />
@@ -213,6 +214,7 @@
     <ClCompile Include="src\dn_io.c" />
     <ClCompile Include="src\dn_math.c" />
     <ClCompile Include="src\dn_rendering.c" />
+    <ClCompile Include="src\dn_simple_drawing.c" />
     <ClCompile Include="src\dn_threads.c" />
     <ClCompile Include="src\main.c" />
   </ItemGroup>
@@ -223,6 +225,7 @@
     <ClInclude Include="src\dn_io.h" />
     <ClInclude Include="src\dn_math.h" />
     <ClInclude Include="src\dn_rendering.h" />
+    <ClInclude Include="src\dn_simple_drawing.h" />
     <ClInclude Include="src\dn_threads.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

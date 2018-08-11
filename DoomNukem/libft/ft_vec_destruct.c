@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vectornew.c                                     :+:      :+:    :+:   */
+/*   ft_vectordestruct.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skamoza <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/24 19:16:02 by skamoza           #+#    #+#             */
-/*   Updated: 2018/01/08 15:23:34 by skamoza          ###   ########.fr       */
+/*   Created: 2017/11/25 14:23:15 by skamoza           #+#    #+#             */
+/*   Updated: 2018/01/08 20:39:58 by skamoza          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_vector	ft_vectornew(size_t size, size_t init)
+void	ft_vec_destruct(t_vector *ptr)
 {
-	t_vector	dynarr;
+	size_t		cunt;
+	void		*content;
 
-	ft_vectorinit(&dynarr, size, init);
-	return (dynarr);
+	if (!ptr)
+		return ;
+	cunt = 0;
+	while (cunt < ptr->back)
+	{
+		if ((content = *(void **)(ptr->array + cunt * ptr->size_of_type)))
+			free(content);
+		cunt++;
+	}
+	ft_vec_del(ptr);
 }

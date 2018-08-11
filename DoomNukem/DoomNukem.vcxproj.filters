@@ -243,24 +243,6 @@
     <ClCompile Include="libft\ft_vec_pushback.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="libft\ft_vectordel.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="libft\ft_vectordestruct.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="libft\ft_vectorget.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="libft\ft_vectorinit.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="libft\ft_vectornew.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="libft\ft_vectorset.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\dn_io.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -268,6 +250,30 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\dn_threads.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vec_del.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vec_destruct.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vec_get.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vec_init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vec_new.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vec_set.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libft\ft_vec_for_each.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dn_simple_drawing.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -291,6 +297,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\dn_threads.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dn_simple_drawing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

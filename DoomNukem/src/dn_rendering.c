@@ -1,6 +1,19 @@
 #include "dn_rendering.h"
+#include "dn_simple_drawing.h"
+#include "dn_events.h"
 #include "dn_io.h"
 #include "dn.h"
+
+static void vsync(t_game_state *game_state)
+{
+	const current_ticks = SDL_GetTicks();
+	const frame_time = current_ticks - game_state->last_time;
+
+	if (frame_time < 16)
+		WAIT(16 - frame_time);
+	game_state->last_time = current_ticks;
+	game_state->frame_time = frame_time;
+}
 
 int init_render_state(t_render_state *renderer)
 {
@@ -10,7 +23,7 @@ int init_render_state(t_render_state *renderer)
 		renderer->h, SDL_WINDOW_FLAGS)))
 	{
 		char message[] = "failed to initialize SDL";
-		ERROR(message);
+		DN_ERROR(message);
 		return (1);
 	}
 	return (0);
@@ -21,22 +34,24 @@ void init_renderer(t_render_state *render_state)
 	render_state->renderer =
 		SDL_CreateRenderer(render_state->window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_RenderSetLogicalSize(render_state->renderer, render_state->w, render_state->h);
-	render_state->pixels = malloc(sizeof(int) * (render_state->w * render_state->h));
+	render_state->pixels = ft_memalloc(sizeof(int) * (render_state->w * render_state->h));
+	render_state->back_buffer = SDL_CreateTexture(render_state->renderer,
+	SDL_PIXELFORMAT_RGBA32, SDL_TEXTUREACCESS_STREAMING, render_state->w, render_state->h);
 }
 
 void	draw_loop(struct s_game_state *game_state)
 {
+	static int i = 10;
 	init_renderer(&game_state->render_state);
 	while (true)
 	{
-		SDL_Renderer *renderer = game_state->render_state.renderer;
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-		SDL_RenderClear(renderer);
+		t_simple_vline line = { i, 100, 200, 0xFFFF};
+		draw_vline((RENDERABLE)game_state, line);
+		i++;
 
-		SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-		SDL_RenderDrawLine(renderer, 320, 200, 300, 240);
-		SDL_RenderDrawLine(renderer, 300, 240, 340, 240);
-		SDL_RenderDrawLine(renderer, 340, 240, 320, 200);
-		SDL_RenderPresent(renderer);
+		SDL_UpdateTexture(game_state->render_state.back_buffer, NULL, game_state->render_state.pixels, game_state->render_state.h);
+		SDL_RenderCopy(game_state->render_state.renderer, game_state->render_state.back_buffer, NULL, NULL);
+		SDL_RenderPresent(game_state->render_state.renderer);
+		vsync(game_state);
 	}
 }

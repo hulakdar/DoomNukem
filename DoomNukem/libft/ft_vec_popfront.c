@@ -16,5 +16,5 @@ void	*ft_vec_popfront(t_vector *vect)
 {
 	if (vect->front == vect->back)
 		return (NULL);
-	return (ft_vectorget(vect, vect->front++));
+	return (ft_vec_get(vect, vect->front++));
 }

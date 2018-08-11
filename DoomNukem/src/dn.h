@@ -63,6 +63,8 @@ typedef struct	s_game_state
 	t_render_state	render_state;
 	t_player		player;
 	t_vector		sectors;
+	unsigned int	last_time;
+	unsigned int	frame_time;
 }				t_game_state;
 
 
