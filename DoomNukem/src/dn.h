@@ -37,41 +37,51 @@
 **	One sector of the map. Should be convex(!!!)
 */
 
-typedef struct	s_wall
+typedef struct		s_wall
 {
-	short		point1;
-	short		point2;
-	short		next_wall;
-	short		next_sector;
-}				t_wall;
+	short			point1;
+	short			next_wall;
+	short			next_sector;
+}					t_wall;
 
 typedef struct	s_sector
 {
-	char		wall_number;
-	short		start_wall;
-}				t_sector;
+	char			wall_number;
+	short			start_wall;
+}					t_sector;
 
 typedef struct	s_player
 {
-	t_vec3		position;
-	t_vec3		velocity;
-	float		angle;
-	float		angle_sin;
-	float		angle_cos;
-	float		yaw;
-	int			sector;
-}				t_player;
+	t_vec3			position;
+	t_vec3			velocity;
+	float			angle;
+	float			angle_sin;
+	float			angle_cos;
+	float			yaw;
+	int				sector;
+}					t_player;
 
 /*
 **	Structure to contain everything you need to hold
 ** through the entire lifetime of the application.
 */
-typedef struct	s_game_state
+
+typedef struct	s_map_data_base
+{
+	short			points_number;
+	short			walls_number;
+	short			sectors_number;
+	t_vec4*			points;
+	t_wall*			walls;
+	t_sector*		sectors;
+}					t_map_data_base;
+
+typedef struct		s_game_state
 {
 	t_render_state	render_state;
 	t_player		player;
-	t_vector		sectors;
-}				t_game_state;
+	t_map_data_base	map_data;
+}					t_game_state;
 
 
 /* 

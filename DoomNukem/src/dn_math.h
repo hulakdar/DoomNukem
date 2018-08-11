@@ -8,7 +8,7 @@
 */
 #define VEC2(type) struct s_vec2##type{type x;type y;}
 #define VEC3(type) struct s_vec3##type{type x;type y;type z;}
-#define VEC4(type) struct s_vec3##type{type x;type y;type z; type w;}
+#define VEC4(type) struct s_vec4##type{type x;type y;type z; type w;}
 
 /*
 ** "Templated" structs
@@ -26,6 +26,7 @@ DECL_VEC2(short, t_vec2s)
 DECL_VEC2(float, t_vec2)
 DECL_VEC3(float, t_vec3)
 DECL_VEC3(char, t_vec3c)
+DECL_VEC4(float, t_vec4)
 
 typedef struct s_line
 {

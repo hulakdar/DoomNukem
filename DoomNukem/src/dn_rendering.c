@@ -2,6 +2,14 @@
 #include "dn_io.h"
 #include "dn.h"
 
+void init_renderer( t_render_state *render_state )
+{
+	render_state->renderer =
+		SDL_CreateRenderer( render_state->window, -1, SDL_RENDERER_ACCELERATED );
+	SDL_RenderSetLogicalSize( render_state->renderer, render_state->w, render_state->h );
+	render_state->pixels = malloc( sizeof( int ) * ( render_state->w * render_state->h ) );
+}
+
 int init_render_state(t_render_state *renderer)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) == -1 ||
@@ -13,20 +21,15 @@ int init_render_state(t_render_state *renderer)
 		ERROR(message);
 		return (1);
 	}
+	else
+	{
+		init_renderer( renderer );
+	}
 	return (0);
-}
-
-void init_renderer(t_render_state *render_state)
-{
-	render_state->renderer =
-		SDL_CreateRenderer(render_state->window, -1, SDL_RENDERER_ACCELERATED);
-	SDL_RenderSetLogicalSize(render_state->renderer, render_state->w, render_state->h);
-	render_state->pixels = malloc(sizeof(int) * (render_state->w * render_state->h));
 }
 
 void	draw_loop(struct s_game_state *game_state)
 {
-	init_renderer(&game_state->render_state);
 	while (true)
 	{
 		SDL_Renderer *renderer = game_state->render_state.renderer;
@@ -37,6 +40,6 @@ void	draw_loop(struct s_game_state *game_state)
 		SDL_RenderDrawLine(renderer, 320, 200, 300, 240);
 		SDL_RenderDrawLine(renderer, 300, 240, 340, 240);
 		SDL_RenderDrawLine(renderer, 340, 240, 320, 200);
-		SDL_RenderPresent(renderer);
+		SDL_RenderPresent(game_state->render_state.renderer);
 	}
 }
