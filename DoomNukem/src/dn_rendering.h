@@ -6,7 +6,7 @@
 #define SDL_WINDOW_FLAGS (SDL_WINDOW_RESIZABLE)
 #define SDL_RENDERER_FLAGS (SDL_RENDERER_ACCELERATED)
 
-#define RENDER_TARGET t_renderable *
+#define RENDER_TARGET(x) (t_renderable *)(&(x).pixels)
 
 #define RENDER_TARGET_INTERFACE int *pixels;int w;int h
 

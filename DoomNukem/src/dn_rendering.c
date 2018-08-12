@@ -4,7 +4,7 @@
 #include "dn_io.h"
 #include "dn.h"
 
-static void vsync(t_game_state *game_state)
+static inline void vsync(t_game_state *game_state)
 {
 	const current_ticks = SDL_GetTicks();
 	const frame_time = current_ticks - game_state->last_time;
@@ -44,8 +44,7 @@ void	draw_loop(struct s_game_state *game_state)
 	init_renderer(&game_state->render_state);
 	while (true)
 	{
-		t_simple_vline line = { game_state->last_time % (game_state->render_state.w - 1), 100, 400, 0xFFFF};
-		draw_vline((RENDER_TARGET)game_state, line);
+		
 
 		SDL_UpdateTexture(game_state->render_state.back_buffer, NULL, game_state->render_state.pixels, game_state->render_state.w * 4);
 		SDL_RenderCopy(game_state->render_state.renderer, game_state->render_state.back_buffer, NULL, NULL);
