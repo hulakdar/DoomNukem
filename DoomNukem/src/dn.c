@@ -52,3 +52,76 @@ void game_loop( t_game_state *game_state )
 	while ( true )
 		WAIT( 2 );
 }
+
+bool is_in_array(short* array, short value, short size )
+{
+	do
+	{
+		if ( *array == value )
+		{
+			return true;
+		}
+		array++;
+	} while ( --size );
+}
+
+bool is_in_sector( float x, t_game_state* game_state, short sector_number )
+{
+	t_vec4* points = game_state->map_data.points;
+	t_wall* walls = game_state->map_data.walls;
+	t_sector* sector = &game_state->map_data.sectors[ sector_number ];
+	short start_wall = sector->start_wall;
+	short current_wall = start_wall;
+	unsigned char intersections_count = 0;
+	do
+	{
+		short x1 = points[ walls[ current_wall ].point1 ].x;
+		short x2 = points[ walls[ walls[ current_wall ].next_wall ].point1 ].x;
+		if ( (x > x1) && (x < x2) || ( x > x2 ) && ( x < x1 ) )
+		{
+			intersections_count++;
+		}
+		current_wall = walls[ current_wall ].next_wall;
+	} while ( walls[current_wall].next_wall != start_wall );
+	return !( intersections_count % 2 );
+}
+
+short update_sector( t_game_state *game_state, float x_player, short last_sector )
+{
+	if ( is_in_sector( x_player, game_state, last_sector ) )
+	{
+		return last_sector;
+	}
+	else
+	{
+		short visited_sectors[ MAX_WALLS_NUMBER ];
+		short visited_sectors_count = 0;
+		short start_wall = game_state->map_data.sectors[ last_sector ].start_wall;
+		short current_wall = start_wall;
+		do
+		{
+			short next_sector = game_state->map_data.walls[ current_wall ].next_sector;
+			if ( next_sector != -1 )
+			{
+				if ( is_in_sector( x_player, game_state, next_sector ) )
+				{
+					return next_sector;
+				}
+				visited_sectors[ visited_sectors_count ] = next_sector;
+				visited_sectors_count++;
+			}
+			current_wall = game_state->map_data.walls[ current_wall ].next_wall;
+		} while ( game_state->map_data.walls[ current_wall ].next_wall != start_wall );
+
+		short i = 0;
+		while ( i < game_state->map_data.sectors_number )
+		{
+			if ( !is_in_array( visited_sectors, i, visited_sectors_count )
+				&& is_in_sector( x_player, game_state, i ) )
+			{
+				return i;
+			}
+			i++;
+		}
+	}
+}

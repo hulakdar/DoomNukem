@@ -19,6 +19,7 @@
 #define KNEE_HEIGHT 2.f
 #define HFOV (0.73f * H)
 #define VFOV (.2f * H)
+#define MAX_WALLS_NUMBER 10
 
 /*
 ** DISCLAIMER:
@@ -97,3 +98,7 @@ typedef struct		s_game_state
 int				init_game_state(t_game_state *game_state);
 
 void			game_loop(t_game_state *game_state);
+
+short update_sector( t_game_state *game_state, float x_player, short last_sector );
+
+bool is_in_array( short* array, short value, short size );
