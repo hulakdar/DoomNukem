@@ -6,14 +6,22 @@
 #define SDL_WINDOW_FLAGS (SDL_WINDOW_RESIZABLE)
 #define SDL_RENDERER_FLAGS (SDL_RENDERER_ACCELERATED)
 
+#define RENDER_TARGET(x) (t_renderable *)(&(x).pixels)
+
+#define RENDER_TARGET_INTERFACE int *pixels;int w;int h
+
+typedef struct	s_renderable
+{
+	RENDER_TARGET_INTERFACE;
+}				t_renderable;
+
 typedef struct	s_render_state
 {
-	SDL_Window		*window;
+	RENDER_TARGET_INTERFACE;
 	SDL_Renderer	*renderer;
-	int				*pixels;
-	int				w;
-	int				h;
+	SDL_Texture		*back_buffer;
+	SDL_Window		*window;
 }				t_render_state;
 
-int				init_render_state(t_render_state *renderer);
-void			draw_loop(struct s_game_state *game_state);
+int				init_render_state( t_render_state *renderer );
+void			draw_loop( struct s_game_state *game_state );

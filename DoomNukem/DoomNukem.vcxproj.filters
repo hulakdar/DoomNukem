@@ -270,6 +270,9 @@
     <ClCompile Include="src\dn_threads.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\dn_simple_drawing.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dn.h">
@@ -291,6 +294,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\dn_threads.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dn_simple_drawing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
