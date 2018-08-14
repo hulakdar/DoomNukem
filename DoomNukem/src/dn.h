@@ -101,4 +101,4 @@ void			game_loop(t_game_state *game_state);
 
 short update_sector( t_game_state *game_state, float x_player, short last_sector );
 
-bool is_in_array( short* array, short value, short size );
+bool isInFrontOfWall( t_game_state *game_state, short wall_number );

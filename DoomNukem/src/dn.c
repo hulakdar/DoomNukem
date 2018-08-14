@@ -53,7 +53,7 @@ void game_loop( t_game_state *game_state )
 		WAIT( 2 );
 }
 
-bool is_in_array(short* array, short value, short size )
+static bool is_in_array(short* array, short value, short size )
 {
 	do
 	{
@@ -65,7 +65,7 @@ bool is_in_array(short* array, short value, short size )
 	} while ( --size );
 }
 
-bool is_in_sector( float x, t_game_state* game_state, short sector_number )
+static bool is_in_sector( float x, t_game_state* game_state, short sector_number )
 {
 	t_vec4* points = game_state->map_data.points;
 	t_wall* walls = game_state->map_data.walls;
@@ -83,7 +83,7 @@ bool is_in_sector( float x, t_game_state* game_state, short sector_number )
 		}
 		current_wall = walls[ current_wall ].next_wall;
 	} while ( walls[current_wall].next_wall != start_wall );
-	return !( intersections_count % 2 );
+	return intersections_count && !( intersections_count % 2 );
 }
 
 short update_sector( t_game_state *game_state, float x_player, short last_sector )
@@ -124,4 +124,14 @@ short update_sector( t_game_state *game_state, float x_player, short last_sector
 			i++;
 		}
 	}
+}
+
+bool isInFrontOfWall( t_game_state *game_state, short wall_number )
+{
+	t_vec4* points = game_state->map_data.points;
+	t_wall* walls = game_state->map_data.walls;
+	t_vec3* player = &game_state->player.position;
+	t_vec4* point1 = &points[ walls[ wall_number ].point1 ];
+	t_vec4* point2 = &points[ walls[ walls[wall_number].next_wall ].point1 ];
+	return ( ( point2->x - point1->x ) * ( player->x - point1->x ) + ( point2->y - point1->y ) * ( player->y - point1->y ) ) < 0;
 }
