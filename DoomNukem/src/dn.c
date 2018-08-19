@@ -135,3 +135,32 @@ bool isInFrontOfWall( t_game_state *game_state, short wall_number )
 	t_vec4* point2 = &points[ walls[ walls[wall_number].next_wall ].point1 ];
 	return ( ( point2->x - point1->x ) * ( player->x - point1->x ) + ( point2->y - point1->y ) * ( player->y - point1->y ) ) < 0;
 }
+
+static bool is_wall_in_fov( t_game_state *game_state, short wall_number )
+{
+	t_vec4* points = game_state->map_data.points;
+	t_wall* walls = game_state->map_data.walls;
+	t_vec2 left_point;
+	t_vec2 right_point;
+	
+	left_point.x = points[ walls[ wall_number ].point1 ].x - game_state->player.position.x;
+	left_point.y = points[ walls[ wall_number ].point1 ].y - game_state->player.position.y;
+
+	right_point.x = points[ walls[ walls[ wall_number ].next_wall ].point1 ].x - game_state->player.position.x;
+	right_point.y = points[ walls[ walls[ wall_number ].next_wall ].point1 ].y - game_state->player.position.y;
+
+	if ( left_point.y <= 0.0f && right_point.y <= 0.0f )
+		return false;
+
+	if ( ( left_point.x < game_state->player.left_fov_edge.x && right_point.x < game_state->player.left_fov_edge.x ) ||
+		( left_point.x > game_state->player.right_fov_edge.x && right_point.x > game_state->player.right_fov_edge.x ) )
+		return false;
+
+	if ( left_point.x > game_state->player.left_fov_edge.x && left_point.x < game_state->player.right_fov_edge.x && left_point.y < 0.0f )
+		return false;
+
+	if ( right_point.x > game_state->player.left_fov_edge.x && right_point.x < game_state->player.right_fov_edge.x && right_point.y < 0.0f )
+		return false;
+
+	return true;
+}

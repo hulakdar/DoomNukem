@@ -64,7 +64,10 @@ typedef struct	s_player
 	float		angle_sin;
 	float		angle_cos;
 	float		yaw;
-	int			sector;
+	short		sector;
+	t_vec2		direction;
+	t_vec2		left_fov_edge;
+	t_vec2		right_fov_edge;
 }				t_player;
 
 /*
@@ -72,7 +75,7 @@ typedef struct	s_player
 ** through the entire lifetime of the application.
 */
 
-typedef struct	s_map_data_base
+typedef struct		s_map_data_base
 {
 	short			points_number;
 	short			walls_number;
@@ -90,6 +93,19 @@ typedef struct		s_game_state
 	unsigned int	last_time;
 	unsigned int	frame_time;
 }					t_game_state;
+
+typedef struct		s_screen_wall
+{
+	short			wall_number;
+	float			x1;
+	float			x2;
+}					t_screen_wall;
+
+typedef struct		s_bunch
+{
+	t_screen_wall*	walls;
+	short			wall_number;
+}					t_bunch;
 
 
 /* 
