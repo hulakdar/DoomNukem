@@ -25,8 +25,10 @@ void initMapDataBase( t_game_state *game_state )
 	walls[ 6 ] = ( t_wall ) { 6, 7, 0 };
 	walls[ 7 ] = ( t_wall ) { 7, 4, 0 };
 
-	sectors[ 0 ] = ( t_sector ) { 4, 0 };
-	sectors[ 1 ] = ( t_sector ) { 4, 4 };
+	short* inside_sectors_number = (short*)malloc( sizeof( short ) );
+	inside_sectors_number[ 0 ] = 1;
+	sectors[ 0 ] = ( t_sector ) { 4, 0, inside_sectors_number, 1 };
+	sectors[ 1 ] = ( t_sector ) { 4, 4, NULL, 0 };
 
 	game_state->map_data.points_number = 8;
 	game_state->map_data.walls_number = 8;
@@ -126,7 +128,7 @@ short update_sector( t_game_state *game_state, float x_player, short last_sector
 	}
 }
 
-bool isInFrontOfWall( t_game_state *game_state, short wall_number )
+bool is_in_front_of_wall( t_game_state *game_state, short wall_number )
 {
 	t_vec4* points = game_state->map_data.points;
 	t_wall* walls = game_state->map_data.walls;
@@ -152,15 +154,80 @@ static bool is_wall_in_fov( t_game_state *game_state, short wall_number )
 	if ( left_point.y <= 0.0f && right_point.y <= 0.0f )
 		return false;
 
-	if ( ( left_point.x < game_state->player.left_fov_edge.x && right_point.x < game_state->player.left_fov_edge.x ) ||
-		( left_point.x > game_state->player.right_fov_edge.x && right_point.x > game_state->player.right_fov_edge.x ) )
+	if ( ( game_state->player.left_fov_edge.x * left_point.x + game_state->player.left_fov_edge.y * left_point.y > 0
+		&& game_state->player.left_fov_edge.x * right_point.x + game_state->player.left_fov_edge.y * right_point.y > 0) ||
+		( game_state->player.right_fov_edge.x * left_point.x + game_state->player.right_fov_edge.y * left_point.y < 0
+			&& game_state->player.right_fov_edge.x * right_point.x + game_state->player.right_fov_edge.y * right_point.y < 0 ) )
 		return false;
 
-	if ( left_point.x > game_state->player.left_fov_edge.x && left_point.x < game_state->player.right_fov_edge.x && left_point.y < 0.0f )
+	if ( ( game_state->player.left_fov_edge.x * left_point.x + game_state->player.left_fov_edge.y * left_point.y > 0 )
+		&& ( game_state->player.right_fov_edge.x * left_point.x + game_state->player.right_fov_edge.y * left_point.y < 0 )
+		&& ( left_point.y < 0.0f ) )
 		return false;
 
-	if ( right_point.x > game_state->player.left_fov_edge.x && right_point.x < game_state->player.right_fov_edge.x && right_point.y < 0.0f )
+	if ( ( game_state->player.left_fov_edge.x * right_point.x + game_state->player.left_fov_edge.y * right_point.y > 0 )
+		&& ( game_state->player.right_fov_edge.x * right_point.x + game_state->player.right_fov_edge.y * right_point.y < 0 )
+		&& ( right_point.y < 0.0f ) )
 		return false;
 
 	return true;
+}
+
+static t_screen_wall get_screen_wall( t_game_state* game_state, short wall_number )
+{
+	t_screen_wall result;
+
+	result.wall_number = wall_number;
+
+	t_vec4* points = game_state->map_data.points;
+	t_wall* walls = game_state->map_data.walls;
+	t_vec2 left_point;
+	t_vec2 right_point;
+
+	left_point.x = points[ walls[ wall_number ].point1 ].x - game_state->player.position.x;
+	left_point.y = points[ walls[ wall_number ].point1 ].y - game_state->player.position.y;
+
+	right_point.x = points[ walls[ walls[ wall_number ].next_wall ].point1 ].x - game_state->player.position.x;
+	right_point.y = points[ walls[ walls[ wall_number ].next_wall ].point1 ].y - game_state->player.position.y;
+
+	left_point.x /= left_point.y;
+	//left_point.y /= left_point.y;
+
+	right_point.x /= right_point.y;
+	//right_point.y /= right_point.y;
+
+	result.x1 = ( left_point.x + game_state->player.right_fov_edge.x ) / 2.0f * W;
+	result.x2 = ( right_point.x + game_state->player.right_fov_edge.x ) / 2.0f * W;
+
+
+	return result;
+}
+
+void analize_sector( t_game_state *game_state, short sector_number )
+{
+	t_vec4* points = game_state->map_data.points;
+	t_wall* walls = game_state->map_data.walls;
+	t_sector* sector = &game_state->map_data.sectors[ sector_number ];
+	short start_wall = sector->start_wall;
+	short current_wall = start_wall;
+	do
+	{
+		if ( is_in_front_of_wall( game_state, current_wall ) && is_wall_in_fov( game_state, current_wall ) )
+		{
+			if ( game_state->bunches )
+			{
+
+			}
+			else
+			{
+				t_bunch bunch;
+				t_screen_wall wall = get_screen_wall( game_state, current_wall );
+				
+			}
+		}
+		else
+		{
+
+		}
+	} while ( walls[ current_wall ].next_wall != start_wall );
 }

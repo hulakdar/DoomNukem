@@ -48,6 +48,8 @@ typedef struct	s_sector
 {
 	char			wall_number;
 	short			start_wall;
+	short*			inside_sectors;
+	short			inside_sectors_number;
 }					t_sector;
 
 typedef struct	s_map
@@ -92,18 +94,19 @@ typedef struct		s_game_state
 	t_map_data_base	map_data;
 	unsigned int	last_time;
 	unsigned int	frame_time;
+	t_list*			bunches;
 }					t_game_state;
 
 typedef struct		s_screen_wall
 {
 	short			wall_number;
-	float			x1;
-	float			x2;
+	short			x1;
+	short			x2;
 }					t_screen_wall;
 
 typedef struct		s_bunch
 {
-	t_screen_wall*	walls;
+	t_list*			screen_walls;
 	short			wall_number;
 }					t_bunch;
 
@@ -117,4 +120,6 @@ void			game_loop(t_game_state *game_state);
 
 short update_sector( t_game_state *game_state, float x_player, short last_sector );
 
-bool isInFrontOfWall( t_game_state *game_state, short wall_number );
+bool is_in_front_of_wall( t_game_state *game_state, short wall_number );
+
+void analize_sector( t_game_state *game_state, short sector_number );
