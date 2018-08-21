@@ -57,10 +57,11 @@ typedef struct	s_player
 /*
 **	Structure to contain everything you need to hold
 ** through the entire lifetime of the application.
+** 
+**	Use get_game_state to get a pointer to it.
 */
 typedef struct	s_game_state
 {
-	t_render_state	render_state;
 	t_player		player;
 	t_vector		sectors;
 	unsigned int	last_time;
@@ -71,6 +72,11 @@ typedef struct	s_game_state
 /* 
 ** Pretty self-explanatory.
 */
-int				init_game_state(t_game_state *game_state);
+int				init_game_state(void);
 
-void			game_loop(t_game_state *game_state);
+void			game_loop(void);
+
+/* 
+**	Get game state singleton.
+*/
+t_game_state *get_game_state(void);
