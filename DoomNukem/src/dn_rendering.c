@@ -25,10 +25,10 @@ void init_render_state(void)
 	render_state = get_render_state();
 	render_state->renderer =
 		SDL_CreateRenderer(render_state->window, -1, SDL_RENDERER_ACCELERATED);
-	SDL_RenderSetLogicalSize(render_state->renderer, render_state->w, render_state->h);
+	//SDL_RenderSetLogicalSize(render_state->renderer, render_state->w, render_state->h);
 	render_state->pixels = ft_memalloc(sizeof(int) * (render_state->w * render_state->h));
 	render_state->back_buffer = SDL_CreateTexture(render_state->renderer,
-	SDL_PIXELFORMAT_RGB888, SDL_TEXTUREACCESS_STREAMING, render_state->w, render_state->h);
+	SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, render_state->w, render_state->h);
 }
 
 void	draw_loop()
@@ -40,10 +40,10 @@ void	draw_loop()
 	while (true)
 	{
 		t_simple_vline line = { i, 100, 200, 0xFFFF};
-		draw_vline((RENDERABLE)render_state, line);
+		draw_vline(RENDER_TARGET(*render_state), line);
 		i++;
 
-		SDL_UpdateTexture(render_state->back_buffer, NULL, render_state->pixels, render_state->w << 2);
+		SDL_UpdateTexture(render_state->back_buffer, NULL, render_state->pixels, render_state->w * 4);
 		SDL_RenderCopy(render_state->renderer, render_state->back_buffer, NULL, NULL);
 		SDL_RenderPresent(render_state->renderer);
 		vsync();
@@ -53,5 +53,6 @@ void	draw_loop()
 t_render_state * get_render_state(void)
 {
 	static t_render_state render_state;
+
 	return &render_state;
 }

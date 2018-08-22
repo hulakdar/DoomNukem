@@ -40,8 +40,15 @@ typedef struct	s_sector
 {
 	float		floor;
 	float		ceil;
-	t_vector	vertecies;
+	short		start;
+	short		length;
 }				t_sector;
+
+typedef struct	s_map
+{
+	t_vector	sectors;
+	t_vector	walls;
+}				t_map;
 
 typedef struct	s_player
 {
@@ -63,7 +70,7 @@ typedef struct	s_player
 typedef struct	s_game_state
 {
 	t_player		player;
-	t_vector		sectors;
+	t_map			*current_map;
 	unsigned int	last_time;
 	unsigned int	frame_time;
 }				t_game_state;

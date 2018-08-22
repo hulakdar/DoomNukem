@@ -8,7 +8,7 @@
 */
 #define VEC2(type) struct s_vec2##type{type x;type y;}
 #define VEC3(type) struct s_vec3##type{type x;type y;type z;}
-#define VEC4(type) struct s_vec3##type{type x;type y;type z; type w;}
+#define VEC4(type) struct s_vec4##type{type x;type y;type z; type w;}
 
 /*
 ** "Templated" structs
