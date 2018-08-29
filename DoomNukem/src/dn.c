@@ -135,7 +135,7 @@ bool is_in_front_of_wall( t_game_state *game_state, short wall_number )
 	t_vec3* player = &game_state->player.position;
 	t_vec4* point1 = &points[ walls[ wall_number ].point1 ];
 	t_vec4* point2 = &points[ walls[ walls[wall_number].next_wall ].point1 ];
-	return ( ( point2->x - point1->x ) * ( player->x - point1->x ) + ( point2->y - point1->y ) * ( player->y - point1->y ) ) < 0;
+	return ( ( point2->x - point1->x ) * ( player->y - point1->y ) - ( point2->y - point1->y ) * ( player->x - point1->x ) ) < 0;
 }
 
 static bool is_wall_in_fov( t_game_state *game_state, short wall_number )
@@ -229,5 +229,6 @@ void analize_sector( t_game_state *game_state, short sector_number )
 		{
 
 		}
+		current_wall = game_state->map_data.walls[ current_wall ].next_wall;
 	} while ( walls[ current_wall ].next_wall != start_wall );
 }
