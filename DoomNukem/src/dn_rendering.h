@@ -23,5 +23,6 @@ typedef struct	s_render_state
 	SDL_Window		*window;
 }				t_render_state;
 
-int				init_render_state(t_render_state *renderer);
-void			draw_loop(struct s_game_state *game_state);
+void			init_render_state(void);
+void			draw_loop(void);
+t_render_state	*get_render_state(void);
