@@ -8,6 +8,7 @@
 #include "dn_math.h"
 #include "dn_rendering.h"
 #include "libft.h"
+#include "bunches_list.h"
 
 /* Numbers are arbitrary */
 #define W 608
@@ -94,21 +95,23 @@ typedef struct		s_game_state
 	t_map_data_base	map_data;
 	unsigned int	last_time;
 	unsigned int	frame_time;
-	t_list*			bunches;
+	t_bunch*		bunches;
+	short*			upper_empty_pixels;
+	short*			lower_empty_pixels;
 }					t_game_state;
 
-typedef struct		s_screen_wall
+/*typedef struct		s_screen_wall
 {
 	short			wall_number;
 	short			x1;
 	short			x2;
-}					t_screen_wall;
+}*/					t_screen_wall;
 
-typedef struct		s_bunch
+/*typedef struct		s_bunch
 {
 	t_list*			screen_walls;
-	short			wall_number;
-}					t_bunch;
+	//short			wall_number;
+}*/					t_bunch;
 
 
 /* 
@@ -122,4 +125,6 @@ short update_sector( t_game_state *game_state, float x_player, short last_sector
 
 bool is_in_front_of_wall( t_game_state *game_state, short wall_number );
 
-void analize_sector( t_game_state *game_state, short sector_number );
+void analize_sector( t_game_state *game_state, short sector_number, bool inside_sector );
+
+void sort_bunches( t_bunch* bunches );

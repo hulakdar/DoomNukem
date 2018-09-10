@@ -39,16 +39,51 @@ void init_renderer( t_render_state *render_state )
 		SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, render_state->w, render_state->h );
 }
 
+void draw_wall( struct s_game_state *game_state, t_screen_wall* screen_wall_list )
+{
+
+}
+
+void draw_bunch( struct s_game_state *game_state, t_bunch* bunch )
+{
+	t_screen_wall* current_wall = bunch->screen_walls_list;
+	do
+	{
+		draw_wall( game_state, current_wall );
+	} while ( ( current_wall = current_wall->next ) );
+}
+
+void draw_frame( struct s_game_state *game_state )
+{
+	t_bunch* current_bunch = game_state->bunches;
+	do
+	{
+		draw_bunch( game_state, current_bunch );
+	} while ( (current_bunch = current_bunch->next) );
+}
+
 void	draw_loop( struct s_game_state *game_state )
 {
 	init_renderer( &game_state->render_state );
 	while ( true )
 	{
+		ft_memset( game_state->upper_empty_pixels, 0, W * sizeof( short ) );
+		ft_memset( game_state->lower_empty_pixels, 0, W * sizeof( short ) );
 
+		game_state->player.sector = update_sector( game_state, game_state->player.position.x, game_state->player.sector );
+
+		analize_sector( game_state, game_state->player.sector, false );
+
+		sort_bunches( game_state->bunches );
+
+		draw_frame( game_state );
 
 		SDL_UpdateTexture( game_state->render_state.back_buffer, NULL, game_state->render_state.pixels, game_state->render_state.w * 4 );
 		SDL_RenderCopy( game_state->render_state.renderer, game_state->render_state.back_buffer, NULL, NULL );
 		SDL_RenderPresent( game_state->render_state.renderer );
 		vsync( game_state );
+
+		free_bunch_list_by_head( game_state->bunches );
+		game_state->bunches = NULL;
 	}
 }

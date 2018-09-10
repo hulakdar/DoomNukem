@@ -273,6 +273,12 @@
     <ClCompile Include="src\dn_simple_drawing.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\screen_walls_list.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bunches_list.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dn.h">
@@ -297,6 +303,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\dn_simple_drawing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\screen_walls_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bunches_list.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

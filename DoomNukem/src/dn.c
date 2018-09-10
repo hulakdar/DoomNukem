@@ -45,6 +45,14 @@ int init_game_state( t_game_state *game_state )
 	game_state->frame_time = 0;
 	game_state->render_state.h = 480;
 	game_state->render_state.w = 640;
+	game_state->player.position = ( t_vec3 ) {5, 1, 0};
+	game_state->player.left_fov_edge = ( t_vec2 ) {-1, 1};
+	game_state->player.right_fov_edge = ( t_vec2 ) {1, 1};
+	game_state->player.angle = 0.0f;
+	game_state->player.sector = 0;
+	game_state->bunches = NULL;
+	game_state->upper_empty_pixels = (short*)malloc( sizeof( short ) * W );
+	game_state->lower_empty_pixels = (short*)malloc( sizeof( short ) * W );
 	init_render_state( &game_state->render_state );
 	return 0;
 }
@@ -84,7 +92,7 @@ static bool is_in_sector( float x, t_game_state* game_state, short sector_number
 			intersections_count++;
 		}
 		current_wall = walls[ current_wall ].next_wall;
-	} while ( walls[current_wall].next_wall != start_wall );
+	} while ( current_wall != start_wall );
 	return intersections_count && !( intersections_count % 2 );
 }
 
@@ -151,7 +159,13 @@ static bool is_wall_in_fov( t_game_state *game_state, short wall_number )
 	right_point.x = points[ walls[ walls[ wall_number ].next_wall ].point1 ].x - game_state->player.position.x;
 	right_point.y = points[ walls[ walls[ wall_number ].next_wall ].point1 ].y - game_state->player.position.y;
 
-	if ( left_point.y <= 0.0f && right_point.y <= 0.0f )
+	bool flag1 = game_state->player.left_fov_edge.x * left_point.y - game_state->player.left_fov_edge.y * left_point.x < 0;
+	bool flag2 = game_state->player.left_fov_edge.x * right_point.y - game_state->player.left_fov_edge.y * right_point.x < 0;
+	bool flag3 = game_state->player.right_fov_edge.x * left_point.y - game_state->player.right_fov_edge.y * left_point.x > 0;
+	bool flag4 = game_state->player.right_fov_edge.x * right_point.y - game_state->player.right_fov_edge.y * right_point.x > 0;
+
+	return( (flag1 && flag3 ) || ( flag2 && flag4 ) );
+	/*if ( left_point.y <= 0.0f && right_point.y <= 0.0f )
 		return false;
 
 	if ( ( game_state->player.left_fov_edge.x * left_point.x + game_state->player.left_fov_edge.y * left_point.y > 0
@@ -168,16 +182,16 @@ static bool is_wall_in_fov( t_game_state *game_state, short wall_number )
 	if ( ( game_state->player.left_fov_edge.x * right_point.x + game_state->player.left_fov_edge.y * right_point.y > 0 )
 		&& ( game_state->player.right_fov_edge.x * right_point.x + game_state->player.right_fov_edge.y * right_point.y < 0 )
 		&& ( right_point.y < 0.0f ) )
-		return false;
+		return false;*/
 
-	return true;
+	//return true;
 }
 
-static t_screen_wall get_screen_wall( t_game_state* game_state, short wall_number )
+static t_screen_wall* get_screen_wall( t_game_state* game_state, short wall_number )
 {
-	t_screen_wall result;
+	t_screen_wall* result = new_screen_wall();
 
-	result.wall_number = wall_number;
+	result->wall_number = wall_number;
 
 	t_vec4* points = game_state->map_data.points;
 	t_wall* walls = game_state->map_data.walls;
@@ -190,45 +204,69 @@ static t_screen_wall get_screen_wall( t_game_state* game_state, short wall_numbe
 	right_point.x = points[ walls[ walls[ wall_number ].next_wall ].point1 ].x - game_state->player.position.x;
 	right_point.y = points[ walls[ walls[ wall_number ].next_wall ].point1 ].y - game_state->player.position.y;
 
-	left_point.x /= left_point.y;
+	left_point.x /= fabs(left_point.y);
 	//left_point.y /= left_point.y;
 
-	right_point.x /= right_point.y;
+	right_point.x /= fabs(right_point.y);
 	//right_point.y /= right_point.y;
 
-	result.x1 = ( left_point.x + game_state->player.right_fov_edge.x ) / 2.0f * W;
-	result.x2 = ( right_point.x + game_state->player.right_fov_edge.x ) / 2.0f * W;
+	//result->x1 = ( left_point.x + game_state->player.left_fov_edge.x ) / 2.0f * W;
+	//result->x2 = ( right_point.x + game_state->player.right_fov_edge.x ) / 2.0f * W;
+	result->x1 = left_point.x / 2.0f * W + W / 2.0f;
+	result->x2 = right_point.x / 2.0f * W + W / 2.0f;
 
 
 	return result;
 }
 
-void analize_sector( t_game_state *game_state, short sector_number )
+void analize_sector( t_game_state *game_state, short sector_number, bool inside_sector )
 {
 	t_vec4* points = game_state->map_data.points;
 	t_wall* walls = game_state->map_data.walls;
 	t_sector* sector = &game_state->map_data.sectors[ sector_number ];
 	short start_wall = sector->start_wall;
 	short current_wall = start_wall;
+	t_screen_wall* bunch_head = NULL;
 	do
 	{
 		if ( is_in_front_of_wall( game_state, current_wall ) && is_wall_in_fov( game_state, current_wall ) )
 		{
+			t_screen_wall* screen_wall = get_screen_wall( game_state, current_wall );
 			if ( game_state->bunches )
 			{
-
+				if ( !bunch_head )
+				{
+					t_bunch* bunch = new_bunch( );
+					bunch->screen_walls_list = screen_wall;
+					add_bunch_by_head( game_state->bunches, bunch );
+					bunch_head = screen_wall;
+				}
+				else
+				{
+					add_screen_wall_by_head( bunch_head, screen_wall );
+				}
 			}
 			else
 			{
-				t_bunch bunch;
-				t_screen_wall wall = get_screen_wall( game_state, current_wall );
-				
+				game_state->bunches = new_bunch( );
+				game_state->bunches->screen_walls_list = screen_wall;
+				bunch_head = screen_wall;
+			}
+
+			if ( walls[ current_wall ].next_sector > 0 )
+			{
+				analize_sector( game_state, walls[ current_wall ].next_sector, inside_sector );
 			}
 		}
 		else
 		{
-
+			bunch_head = NULL;
 		}
 		current_wall = game_state->map_data.walls[ current_wall ].next_wall;
-	} while ( walls[ current_wall ].next_wall != start_wall );
+	} while ( current_wall != start_wall );
+}
+
+void sort_bunches( t_bunch* bunches )
+{
+
 }

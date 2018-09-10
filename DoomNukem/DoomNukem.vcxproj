@@ -208,6 +208,7 @@
     <ClCompile Include="libft\ft_vec_popfront.c" />
     <ClCompile Include="libft\ft_vec_pushback.c" />
     <ClCompile Include="libft\get_next_line.c" />
+    <ClCompile Include="src\bunches_list.c" />
     <ClCompile Include="src\dn.c" />
     <ClCompile Include="src\dn_events.c" />
     <ClCompile Include="src\dn_io.c" />
@@ -216,9 +217,11 @@
     <ClCompile Include="src\dn_simple_drawing.c" />
     <ClCompile Include="src\dn_threads.c" />
     <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\screen_walls_list.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libft\include\libft.h" />
+    <ClInclude Include="src\bunches_list.h" />
     <ClInclude Include="src\dn.h" />
     <ClInclude Include="src\dn_events.h" />
     <ClInclude Include="src\dn_io.h" />
@@ -226,6 +229,7 @@
     <ClInclude Include="src\dn_rendering.h" />
     <ClInclude Include="src\dn_simple_drawing.h" />
     <ClInclude Include="src\dn_threads.h" />
+    <ClInclude Include="src\screen_walls_list.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
