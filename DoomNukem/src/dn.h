@@ -46,8 +46,10 @@ typedef struct	s_sector
 
 typedef struct	s_map
 {
-	t_vector	sectors;
-	t_vector	walls;
+	t_sector		*sectors;
+	t_vec2			*vertex_data;
+	unsigned short	*neighbors;
+	unsigned short	num_sectors;
 }				t_map;
 
 typedef struct	s_player

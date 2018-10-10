@@ -49,7 +49,7 @@ typedef t_line t_box;
 /*
 ** Vector cross product in 2D. Returns a float. this is not a mistake.
 */
-#define CROSS(x0,y0, x1,y1)    ((x0)*(y1) - (x1)*(y0))
+#define CROSS(x0, y0, x1, y1)    ((x0) * (y1) - (x1) * (y0))
 
 /*
 ** Check whether 2 boxes intersect. Doesn't work with lines.
