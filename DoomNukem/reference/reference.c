@@ -338,7 +338,7 @@ int main()
 					float hole_high = sect->neighbors[s] < 0 ? -9e9 : min(sect->ceil, sectors[sect->neighbors[s]].ceil);
 					/* Check whether we're bumping into a wall. */
 					if (hole_high < player.where.z + HeadMargin
-						|| hole_low  > player.where.z - eyeheight + KneeHeight)
+					|| hole_low  > player.where.z - eyeheight + KneeHeight)
 					{
 						/* Bumps into a wall! Slide along the wall. */
 						/* This formula is from Wikipedia article "vector projection". */

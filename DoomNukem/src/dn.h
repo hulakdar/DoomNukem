@@ -38,16 +38,17 @@
 */
 typedef struct	s_sector
 {
-	float		floor;
-	float		ceil;
 	short		start;
 	short		length;
+	char		floor;
+	char		ceil;
 }				t_sector;
 
 typedef struct	s_map
 {
-	t_vector	sectors;
-	t_vector	walls;
+	t_sector	*sectors;
+	t_vec2		*verts;
+	short		*neigbours;
 }				t_map;
 
 typedef struct	s_player
@@ -58,32 +59,30 @@ typedef struct	s_player
 	float		angle_sin;
 	float		angle_cos;
 	float		yaw;
-	int			sector;
+	short		sector;
 }				t_player;
 
 /*
 **	Structure to contain everything you need to hold
 ** through the entire lifetime of the application.
 ** 
-**	Use get_game_state to get a pointer to it.
+**	Use get_game_state() to get a pointer to it.
 */
 typedef struct	s_game_state
 {
-	t_player		player;
-	t_map			*current_map;
-	unsigned int	last_time;
-	unsigned int	frame_time;
+	t_player	player;
+	t_map		*current_map;
+	unsigned	last_time;
+	unsigned	frame_time;
 }				t_game_state;
-
 
 /* 
 ** Pretty self-explanatory.
 */
 int				init_game_state(void);
-
 void			game_loop(void);
 
 /* 
 **	Get game state singleton.
 */
-t_game_state *get_game_state(void);
+t_game_state	*get_game_state(void);

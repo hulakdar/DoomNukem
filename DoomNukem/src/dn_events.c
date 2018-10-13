@@ -3,7 +3,8 @@
 
 int create_window(int width, int height)
 {
-	t_render_state *render_state;
+	const char		error_message[] = "failed to initialize SDL";
+	t_render_state	*render_state;
 
 	render_state = get_render_state();
 	render_state->w = width;
@@ -14,8 +15,7 @@ int create_window(int width, int height)
 		width, height,
 		SDL_WINDOW_FLAGS)))
 	{
-		char message[] = "failed to initialize SDL";
-		DN_ERROR(message);
+		DN_ERROR(error_message);
 		return (1);
 	}
 	return (0);

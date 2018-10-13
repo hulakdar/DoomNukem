@@ -38,12 +38,8 @@ typedef t_line t_box;
 /*
 ** Everything here is stolen from Bisqwit
 */
-
-/* Math "templated" macro */
 #define CLAMP(a, mi, ma)  min(max(a, mi), ma)
-/* Helper macro. Hate norm */
 #define LESS(a0, a1, b0, b1) (min(a0, a1) <= max(b0, b1))
-/* Checks for 2 ranges overlap */
 #define OVERLAP(a0, a1, b0, b1) (LESS(a0, a1, b0, b1) && LESS(b0, b1, a0, a1))
 
 /*
@@ -65,3 +61,9 @@ char	determine_side(t_vec2 point, t_line line);
 ** Find the point where 2 lines intersect
 */
 t_vec2	line_intersection(t_line a, t_line b);
+
+/*
+** Rotate 2D vector around origin.
+** Pass cos(angle) and sin(angle), for performance reasons.
+*/
+t_vec2	rotate_vec2(float cos, float sin, t_vec2 vector);

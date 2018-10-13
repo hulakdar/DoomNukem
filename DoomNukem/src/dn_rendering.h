@@ -5,24 +5,27 @@
 
 #define SDL_WINDOW_FLAGS (SDL_WINDOW_RESIZABLE)
 #define SDL_RENDERER_FLAGS (SDL_RENDERER_ACCELERATED)
+#define COLOR_RED ((t_color){255,0,0})
+#define COLOR_GREEN ((t_color){0,255,0})
+#define COLOR_BLUE ((t_color){0,0,255})
 
-#define RENDER_TARGET(x) (t_renderable *)(&(x).pixels)
-
-#define RENDER_TARGET_INTERFACE int *pixels;int w;int h
-
-typedef struct	s_renderable
+typedef struct	s_color
 {
-	RENDER_TARGET_INTERFACE;
-}				t_renderable;
+	unsigned char	b;
+	unsigned char	g;
+	unsigned char	r;
+}				t_color;
 
 typedef struct	s_render_state
 {
-	RENDER_TARGET_INTERFACE;
+	float			*depth_buffer;
 	SDL_Renderer	*renderer;
-	SDL_Texture		*back_buffer;
+	SDL_Texture		*screen_texture;
 	SDL_Window		*window;
+	t_color			*pixels;
+	int				w;
+	int				h;
 }				t_render_state;
 
-void			init_render_state(void);
 void			draw_loop(void);
 t_render_state	*get_render_state(void);

@@ -214,6 +214,7 @@
     <ClCompile Include="src\dn_io.c" />
     <ClCompile Include="src\dn_math.c" />
     <ClCompile Include="src\dn_rendering.c" />
+    <ClCompile Include="src\dn_render_helpers.c" />
     <ClCompile Include="src\dn_simple_drawing.c" />
     <ClCompile Include="src\dn_threads.c" />
     <ClCompile Include="src\main.c" />
@@ -225,6 +226,7 @@
     <ClInclude Include="src\dn_io.h" />
     <ClInclude Include="src\dn_math.h" />
     <ClInclude Include="src\dn_rendering.h" />
+    <ClInclude Include="src\dn_render_helpers.h" />
     <ClInclude Include="src\dn_simple_drawing.h" />
     <ClInclude Include="src\dn_threads.h" />
   </ItemGroup>
