@@ -4,8 +4,6 @@
 
 int main(void)
 {
-	t_game_state game_state;
-
 	init_game_state();
 	create_window(640, 480);
 	start_thread((ROUTINE)game_loop, NULL);

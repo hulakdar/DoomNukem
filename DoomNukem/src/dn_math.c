@@ -39,3 +39,11 @@ t_vec2 line_intersection(t_line one, t_line two)
 		CROSS(cross.x, sub_one.y, cross.y, sub_two.y) / delimiter
 	});
 }
+
+t_vec2 rotate_vec2(float cosine, float sine, t_vec2 vec)
+{
+	return ((t_vec2) {
+		vec.x * cosine + vec.y * sine,
+		vec.y * cosine - vec.x * sine
+	});
+}

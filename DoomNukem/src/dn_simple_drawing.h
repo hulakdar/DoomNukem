@@ -1,5 +1,7 @@
 #pragma once
 
+#include "dn_rendering.h"
+
 typedef struct	s_item
 {
 	int			sector_number;
@@ -12,8 +14,10 @@ typedef struct	s_simple_vline
 	int			x;
 	int			y1;
 	int			y2;
-	int			color;
+	t_color		color;
+	float		depth;
 }				t_simple_vline;
 
-void	draw_vline(struct s_renderable *renderable, t_simple_vline line);
-void	draw_screen_simple(struct s_game_state *game_state);
+void	draw_vline(struct s_render_state *renderable, t_simple_vline line);
+void	draw_screen_simple(void);
+t_color make_color_from_int(int hex);
