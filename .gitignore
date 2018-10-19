@@ -54,3 +54,6 @@ dkms.conf
 bin/
 Intermidiates/
 .vs/
+
+# git junk
+*.orig
