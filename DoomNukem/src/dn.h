@@ -56,8 +56,6 @@ typedef struct	s_player
 	t_vec3		position;
 	t_vec3		velocity;
 	float		angle;
-	float		angle_sin;
-	float		angle_cos;
 	float		yaw;
 	short		sector;
 }				t_player;

@@ -5,6 +5,8 @@
 
 #define SDL_WINDOW_FLAGS (SDL_WINDOW_RESIZABLE)
 #define SDL_RENDERER_FLAGS (SDL_RENDERER_ACCELERATED)
+#define COLOR_BLACK ((t_color){0,0,0})
+#define COLOR_WHITE ((t_color){255,255,255})
 #define COLOR_RED ((t_color){255,0,0})
 #define COLOR_GREEN ((t_color){0,255,0})
 #define COLOR_BLUE ((t_color){0,0,255})

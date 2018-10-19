@@ -40,6 +40,9 @@ void set_color(t_vec2i point, t_color color)
 {
 	t_render_state *render_state = get_render_state();
 	
+	if (point.x < 0 || point.y < 0 || point.x >= render_state->w || point.y >= render_state->h)
+		return;
+
 	t_color *pixels = render_state->pixels;
 	pixels[point.y * render_state->w + point.x] = color;
 }
@@ -55,10 +58,10 @@ void brezenheim(t_line line, t_color color) {
 		ft_swapf(&line.a.x, &line.b.x);
 		ft_swapf(&line.a.y, &line.b.y);
 	}
-	int dx = line.b.x - line.a.x;
-	int dy = line.b.y - line.a.y;
-	float derror = fabs((float)dy / (float)dx);
-	float error = 0;
+	double dx = line.b.x - line.a.x;
+	double dy = line.b.y - line.a.y;
+	double derror = fabs(dy / dx);
+	double error = 0;
 	int y = line.a.y;
 	for (int x = line.a.x; x <= line.b.x; x++) {
 		if (steep) {
@@ -75,25 +78,50 @@ void brezenheim(t_line line, t_color color) {
 	}
 }
 
-void process_sector(t_list **pending_sectors)
+void process_sector(t_list **pending_sectors, int count)
 {
+	const t_color colors[] = {COLOR_BLUE, COLOR_GREEN, COLOR_RED};
 	t_game_state	*game_state = get_game_state();
+	t_render_state	*render_state = get_game_state();
 	t_map			map = *game_state->current_map;
+
 	short secnum = *(short*)(*pending_sectors)->content;
 	t_sector current_sector = map.sectors[secnum];
 	t_vec2 *sector_verts = &map.verts[current_sector.start];
 
+	const t_player player = game_state->player;
+	const t_vec2 player_pos = { player.position.x, player.position.y };
+	const float pcos = cos(player.angle);
+	const float psin = sin(player.angle);
+
 	for (int i = 0; i < current_sector.length; ++i)
 	{
-		// TODO: filter out walls that we don't face
-		t_line line = { sector_verts[i], sector_verts[i + 1] };
-		line.a.x += 10;
-		line.b.x += 10;
-		line.a.y += 10;
-		line.b.y += 10;
-		brezenheim(line, COLOR_BLUE);
+		const t_line line = { sector_verts[i], sector_verts[i + 1] };
+
+		// translating everything to player space
+		t_vec2 v1 = VEC2_SUB(line.a, player_pos);
+		t_vec2 v2 = VEC2_SUB(line.b, player_pos);
+
+		// rotating to player space
+		v1 = rotate_vec2(pcos, psin, v1);
+		v2 = rotate_vec2(pcos, psin, v2);
+		// DEBUG MINI-MAP
+		{
+			t_line local_line = { v1, v2 };
+			local_line.a.x += 100;
+			local_line.b.x += 100;
+			local_line.a.y += 100;
+			local_line.b.y += 100;
+			brezenheim(local_line, colors[count]);
+		}
+		// END DEBUG MINI-MAP
+
+		// TODO: filter out walls that we don't face and also do frustrum clipping to avoid edges from behind leaking into view
+
+		// TODO: transform to screen space and draw
 	}
 	ft_lstdelone(pending_sectors, del_func);
+	count++;
 }
 
 void draw_screen_simple(void)
@@ -102,10 +130,12 @@ void draw_screen_simple(void)
 	t_render_state	*render_state = get_render_state();
 	t_list			*pending_sectors;
 
+	int i = 0;
+	short k = 1;
+
+	// here we generate bunches
 	pending_sectors = ft_lstnew(&game_state->player.sector, sizeof(short));
+	pending_sectors->next = ft_lstnew(&k, sizeof(short));
 	while (pending_sectors)
-	{
-		process_sector(&pending_sectors);
-		
-	}
+		process_sector(&pending_sectors, i++);
 }

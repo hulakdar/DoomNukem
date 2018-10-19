@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdlib.h>
 
+
 /*
 ** Helper macros
 */
@@ -33,6 +34,11 @@ typedef struct s_line
 	t_vec2	b;
 }				t_line;
 
+#define VEC2_ADD(a, b) ((t_vec2){(a).x + (b).x, (a).y + (b).y})
+#define VEC2_SUB(a, b) ((t_vec2){(a).x - (b).x, (a).y - (b).y})
+#define VEC2_MUL(a, b) ((t_vec2){(a).x * (b).x, (a).y * (b).y})
+#define VEC2_DIV(a, b) ((t_vec2){(a).x / (b).x, (a).y / (b).y})
+
 typedef t_line t_box;
 
 /*
@@ -60,10 +66,10 @@ char	determine_side(t_vec2 point, t_line line);
 /*
 ** Find the point where 2 lines intersect
 */
-t_vec2	line_intersection(t_line a, t_line b);
+t_vec2	line_intersection(const t_line a,const  t_line b);
 
 /*
 ** Rotate 2D vector around origin.
 ** Pass cos(angle) and sin(angle), for performance reasons.
 */
-t_vec2	rotate_vec2(float cos, float sin, t_vec2 vector);
+t_vec2	rotate_vec2(const float cos, const float sin, const t_vec2 vector);

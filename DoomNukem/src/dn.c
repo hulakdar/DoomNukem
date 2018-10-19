@@ -3,16 +3,20 @@
 
 t_vec2 verts[] = {
 	{0,0},
-	{0,20},
-	{30,30},
-	{30,20},
-	{20,0},
+	{0,40},
+	{10,60},
+	{70,90},
+	{80,80},
+	{90,40},
+	{50,0},
+	{30,0},
 	{0,0}
 };
 
 t_sector sectors[] = 
 {
 	{0, 5, 9, 0},
+	{5, 3, 9, 0},
 	{0, 0, 0, 0}
 };
 
@@ -36,6 +40,8 @@ t_game_state *get_game_state(void)
 
 void game_loop(void)
 {
-	//while (true)
+	t_game_state *game_state = get_game_state();
+
+	while (true)
 		WAIT(16);
 }

@@ -1,5 +1,7 @@
 #include "dn_math.h"
 
+#include <emmintrin.h>
+
 bool boxes_intersect(t_box first, t_box second)
 {
 	return (OVERLAP(first.a.x, first.b.x, second.a.x, second.b.x)
@@ -18,7 +20,7 @@ char determine_side(t_vec2 point, t_line line)
 	return -1;
 }
 
-t_vec2 line_intersection(t_line one, t_line two)
+t_vec2 line_intersection(const t_line one, const t_line two)
 {
 	const t_vec2 cross = {
 		CROSS(one.a.x, one.a.y, one.b.x, one.b.y),
@@ -40,7 +42,7 @@ t_vec2 line_intersection(t_line one, t_line two)
 	});
 }
 
-t_vec2 rotate_vec2(float cosine, float sine, t_vec2 vec)
+t_vec2 rotate_vec2(const float cosine, const float sine, const t_vec2 vec)
 {
 	return ((t_vec2) {
 		vec.x * cosine + vec.y * sine,
