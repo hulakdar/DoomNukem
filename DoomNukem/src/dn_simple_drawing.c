@@ -80,10 +80,10 @@ void brezenheim(t_line line, t_color color) {
 
 void process_sector(t_list **pending_sectors)
 {
-	const t_color colors[] = {COLOR_BLUE, COLOR_GREEN, COLOR_RED};
+	const t_color colors[] = {COLOR_BLUE, COLOR_GREEN, COLOR_RED, COLOR_WHITE};
 	t_game_state	*game_state = get_game_state();
-	t_render_state	*render_state = get_game_state();
 	t_map			map = *game_state->current_map;
+	//t_render_state	*render_state = get_render_state();
 
 	short secnum = *(short*)(*pending_sectors)->content;
 	t_sector current_sector = map.sectors[secnum];
@@ -91,13 +91,13 @@ void process_sector(t_list **pending_sectors)
 
 	const t_player player = game_state->player;
 	const t_vec2 player_pos = { player.position.x, player.position.y };
-	const float pcos = cos(player.angle);
-	const float psin = sin(player.angle);
+	const float pcos = cosf(player.angle);
+	const float psin = sinf(player.angle);
 
 	const t_vec2 up = {0, -20};
 
-	const t_vec2 left_v = rotate_vec2(cos(-HFOV / 2), sin(-HFOV / 2), up);
-	const t_vec2 right_v = rotate_vec2(cos(HFOV / 2), sin(HFOV / 2), up);
+	const t_vec2 left_v = rotate_vec2(cosf(-HFOV / 2), sinf(-HFOV / 2), up);
+	const t_vec2 right_v = rotate_vec2(cosf(HFOV / 2), sinf(HFOV / 2), up);
 	const t_line left_frust = { {0,0}, left_v };
 	const t_line right_frust = { {0,0}, right_v };
 
@@ -151,12 +151,11 @@ void draw_screen_simple(void)
 	pending_sectors->next = ft_lstnew(&k, sizeof(short));
 	while (pending_sectors)
 		process_sector(&pending_sectors);
-	t_player player = game_state->player;
 	
 	const t_vec2 player_pos = { 400, 300 };
 	const t_vec2 up = {0, -20};
-	const t_vec2 left_frust = rotate_vec2(cos(-HFOV / 2), sin(-HFOV / 2), up);
-	const t_vec2 right_frust = rotate_vec2(cos(HFOV / 2), sin(HFOV / 2), up);
+	const t_vec2 left_frust = rotate_vec2(cosf(-HFOV / 2), sinf(-HFOV / 2), up);
+	const t_vec2 right_frust = rotate_vec2(cosf(HFOV / 2), sinf(HFOV / 2), up);
 	brezenheim((t_line) { player_pos, VEC2_ADD(player_pos, up) }, COLOR_WHITE);
 	brezenheim((t_line) { player_pos, VEC2_ADD(player_pos, left_frust) }, COLOR_GREEN);
 	brezenheim((t_line) { player_pos, VEC2_ADD(player_pos, right_frust) }, COLOR_GREEN);

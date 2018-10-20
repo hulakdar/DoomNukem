@@ -25,7 +25,7 @@ int create_window(int width, int height)
 
 void event_handler(void)
 {
-	const t_game_state *game_state = get_game_state();
+	t_game_state *game_state = get_game_state();
 	t_player *player = &game_state->player;
 	SDL_Event e;
 
@@ -36,7 +36,7 @@ void event_handler(void)
 			if (e.type == SDL_KEYDOWN)
 			{
 				const t_vec2 up = {0, -1.f};
-				const t_vec2 front = rotate_vec2(cos(-player->angle), sin(-player->angle), up);
+				const t_vec2 front = rotate_vec2(cosf(-player->angle), sinf(-player->angle), up);
 
 				if (e.key.keysym.sym == SDLK_LEFT)
 					player->angle -= 0.1f;
