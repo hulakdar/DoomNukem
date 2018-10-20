@@ -11,6 +11,7 @@ void init_render_state(void)
 		SDL_CreateRenderer(render_state->window, -1, SDL_RENDERER_ACCELERATED);
 	//SDL_RenderSetLogicalSize(render_state->renderer, render_state->w, render_state->h);
 	render_state->pixels = ft_memalloc(sizeof(t_color) * (render_state->w * render_state->h));
+	render_state->depth_buffer = ft_memalloc(sizeof(float) * (render_state->w * render_state->h));
 	render_state->screen_texture = SDL_CreateTexture(render_state->renderer,
 	SDL_PIXELFORMAT_BGR24, SDL_TEXTUREACCESS_STREAMING, render_state->w, render_state->h);
 }

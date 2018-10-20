@@ -22,9 +22,9 @@ void	draw_loop()
 	{
 		for (int i = 0; i < render_state->h * render_state->w; ++i)
 			render_state->pixels[i] = COLOR_BLACK;
-
+		for (int i = 0; i < render_state->h * render_state->w; ++i)
+			render_state->depth_buffer[i] = INFINITY;
 		draw_screen_simple();
-
 		end_render_frame();
 	}
 }

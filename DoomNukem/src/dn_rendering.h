@@ -13,9 +13,9 @@
 
 typedef struct	s_color
 {
-	unsigned char	b;
-	unsigned char	g;
 	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
 }				t_color;
 
 typedef struct	s_render_state

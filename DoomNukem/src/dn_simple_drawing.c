@@ -78,7 +78,7 @@ void brezenheim(t_line line, t_color color) {
 	}
 }
 
-void process_sector(t_list **pending_sectors, int count)
+void process_sector(t_list **pending_sectors)
 {
 	const t_color colors[] = {COLOR_BLUE, COLOR_GREEN, COLOR_RED};
 	t_game_state	*game_state = get_game_state();
@@ -94,6 +94,13 @@ void process_sector(t_list **pending_sectors, int count)
 	const float pcos = cos(player.angle);
 	const float psin = sin(player.angle);
 
+	const t_vec2 up = {0, -20};
+
+	const t_vec2 left_v = rotate_vec2(cos(-HFOV / 2), sin(-HFOV / 2), up);
+	const t_vec2 right_v = rotate_vec2(cos(HFOV / 2), sin(HFOV / 2), up);
+	const t_line left_frust = { {0,0}, left_v };
+	const t_line right_frust = { {0,0}, right_v };
+
 	for (int i = 0; i < current_sector.length; ++i)
 	{
 		const t_line line = { sector_verts[i], sector_verts[i + 1] };
@@ -105,23 +112,29 @@ void process_sector(t_list **pending_sectors, int count)
 		// rotating to player space
 		v1 = rotate_vec2(pcos, psin, v1);
 		v2 = rotate_vec2(pcos, psin, v2);
+
+		// filter out walls that we don't face
+		const bool a_left = determine_side(v1, left_frust) >= 0;
+		const bool b_left = determine_side(v2, left_frust) >= 0;
+		const bool a_right = determine_side(v2, right_frust) <= 0;
+		const bool b_right = determine_side(v2, right_frust) <= 0;
+
+//TODO: do frustrum clipping to avoid edges from behind leaking into view
+
 		// DEBUG MINI-MAP
 		{
 			t_line local_line = { v1, v2 };
-			local_line.a.x += 100;
-			local_line.b.x += 100;
-			local_line.a.y += 100;
-			local_line.b.y += 100;
-			brezenheim(local_line, colors[count]);
+			local_line.a.x += 400;
+			local_line.b.x += 400;
+			local_line.a.y += 300;
+			local_line.b.y += 300;
+			brezenheim(local_line, colors[(a_left && b_left) | ((a_right && b_right) << 1)]);
 		}
 		// END DEBUG MINI-MAP
-
-		// TODO: filter out walls that we don't face and also do frustrum clipping to avoid edges from behind leaking into view
 
 		// TODO: transform to screen space and draw
 	}
 	ft_lstdelone(pending_sectors, del_func);
-	count++;
 }
 
 void draw_screen_simple(void)
@@ -137,5 +150,14 @@ void draw_screen_simple(void)
 	pending_sectors = ft_lstnew(&game_state->player.sector, sizeof(short));
 	pending_sectors->next = ft_lstnew(&k, sizeof(short));
 	while (pending_sectors)
-		process_sector(&pending_sectors, i++);
+		process_sector(&pending_sectors);
+	t_player player = game_state->player;
+	
+	const t_vec2 player_pos = { 400, 300 };
+	const t_vec2 up = {0, -20};
+	const t_vec2 left_frust = rotate_vec2(cos(-HFOV / 2), sin(-HFOV / 2), up);
+	const t_vec2 right_frust = rotate_vec2(cos(HFOV / 2), sin(HFOV / 2), up);
+	brezenheim((t_line) { player_pos, VEC2_ADD(player_pos, up) }, COLOR_WHITE);
+	brezenheim((t_line) { player_pos, VEC2_ADD(player_pos, left_frust) }, COLOR_GREEN);
+	brezenheim((t_line) { player_pos, VEC2_ADD(player_pos, right_frust) }, COLOR_GREEN);
 }
