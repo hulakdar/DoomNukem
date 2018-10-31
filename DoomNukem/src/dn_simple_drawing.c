@@ -58,10 +58,10 @@ void brezenheim(t_line line, t_color color) {
 		ft_swapf(&line.a.x, &line.b.x);
 		ft_swapf(&line.a.y, &line.b.y);
 	}
-	double dx = line.b.x - line.a.x;
-	double dy = line.b.y - line.a.y;
-	double derror = fabs(dy / dx);
-	double error = 0;
+	float dx = line.b.x - line.a.x;
+	float dy = line.b.y - line.a.y;
+	float derror = fabsf(dy / dx);
+	float error = 0;
 	int y = line.a.y;
 	for (int x = line.a.x; x <= line.b.x; x++) {
 		if (steep) {
@@ -71,7 +71,7 @@ void brezenheim(t_line line, t_color color) {
 			set_color((t_vec2i){x, y}, color);
 		}
 		error += derror;
-		if (error > .5) {
+		if (error > .5f) {
 			y += (line.b.y > line.a.y ? 1 : -1);
 			error -= 1.;
 		}
@@ -80,7 +80,7 @@ void brezenheim(t_line line, t_color color) {
 
 void process_sector(t_list **pending_sectors)
 {
-	const t_color colors[] = {COLOR_BLUE, COLOR_GREEN, COLOR_RED, COLOR_WHITE};
+	const t_color colors[] = {COLOR_BLUE, COLOR_GREEN, COLOR_RED, COLOR_YELLOW, COLOR_MAGENTA, COLOR_WHITE};
 	t_game_state	*game_state = get_game_state();
 	t_map			map = *game_state->current_map;
 	//t_render_state	*render_state = get_render_state();
@@ -113,13 +113,29 @@ void process_sector(t_list **pending_sectors)
 		v1 = rotate_vec2(pcos, psin, v1);
 		v2 = rotate_vec2(pcos, psin, v2);
 
-		// filter out walls that we don't face
-		const bool a_left = determine_side(v1, left_frust) >= 0;
-		const bool b_left = determine_side(v2, left_frust) >= 0;
-		const bool a_right = determine_side(v2, right_frust) <= 0;
-		const bool b_right = determine_side(v2, right_frust) <= 0;
+		// filtering out walls that we don't face
+		//const bool a_left = determine_side(v1, left_frust) > 0;
+		//const bool b_left = determine_side(v2, left_frust) > 0;
+		//const bool a_right = determine_side(v2, right_frust) < 0;
+		//const bool b_right = determine_side(v2, right_frust) < 0;
+
+		//if (((a_left && b_left) | (a_right && b_right)) == 0)
+		//	continue;
+
+		const char a_left = determine_side(v1, left_frust);
+		const char b_left = determine_side(v2, left_frust);
+		const char a_right = determine_side(v2, right_frust);
+		const char b_right = determine_side(v2, right_frust);
+
+		if (a_left == a_left == b_right == b_left)
+			continue;
+
+		
+
+		// end filtering
 
 //TODO: do frustrum clipping to avoid edges from behind leaking into view
+
 
 		// DEBUG MINI-MAP
 		{
@@ -128,7 +144,8 @@ void process_sector(t_list **pending_sectors)
 			local_line.b.x += 400;
 			local_line.a.y += 300;
 			local_line.b.y += 300;
-			brezenheim(local_line, colors[(a_left && b_left) | ((a_right && b_right) << 1)]);
+			int col = ((a_left && b_left) | ((a_right && b_right) << 1));
+			brezenheim(local_line, colors[col]);
 		}
 		// END DEBUG MINI-MAP
 

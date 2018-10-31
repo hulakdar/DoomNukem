@@ -12,7 +12,7 @@ int create_window(int width, int height)
 	render_state->w = width;
 	render_state->h = height;
 	if (SDL_Init(SDL_INIT_VIDEO) == -1 ||
-		!(render_state->window = SDL_CreateWindow("RT",
+		!(render_state->window = SDL_CreateWindow("DNK",
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		width, height,
 		SDL_WINDOW_FLAGS)))

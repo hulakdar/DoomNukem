@@ -10,6 +10,9 @@
 #define COLOR_RED ((t_color){255,0,0})
 #define COLOR_GREEN ((t_color){0,255,0})
 #define COLOR_BLUE ((t_color){0,0,255})
+#define COLOR_YELLOW ((t_color){255,255,0})
+#define COLOR_MAGENTA ((t_color){255,0,255})
+#define COLOR_ANOTHER ((t_color){0,255,255})
 
 typedef struct	s_color
 {
