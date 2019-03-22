@@ -18,6 +18,6 @@ typedef struct	s_simple_vline
 	float		depth;
 }				t_simple_vline;
 
-void	draw_vline(struct s_render_state *renderable, t_simple_vline line);
+void	draw_vline(t_simple_vline line);
 void	draw_screen_simple(void);
 t_color make_color_from_int(int hex);

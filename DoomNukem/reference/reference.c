@@ -194,7 +194,8 @@ static void DrawScreen()
 			float tx1 = vx1 * psin - vy1 * pcos, tz1 = vx1 * pcos + vy1 * psin;
 			float tx2 = vx2 * psin - vy2 * pcos, tz2 = vx2 * pcos + vy2 * psin;
 			/* Is the wall at least partially in front of the player? */
-			if (tz1 <= 0 && tz2 <= 0) continue;
+			if (tz1 <= 0 && tz2 <= 0) 
+				continue;
 			/* If it's partially behind the player, clip it against player's view frustrum */
 			if (tz1 <= 0 || tz2 <= 0)
 			{
@@ -208,8 +209,10 @@ static void DrawScreen()
 			/* Do perspective transformation */
 			float xscale1 = hfov / tz1, yscale1 = vfov / tz1;    int x1 = W / 2 - (int)(tx1 * xscale1);
 			float xscale2 = hfov / tz2, yscale2 = vfov / tz2;    int x2 = W / 2 - (int)(tx2 * xscale2);
-			if (x1 >= x2 || x2 < now.sx1 || x1 > now.sx2) continue; // Only render if it's visible
-																	/* Acquire the floor and ceiling heights, relative to where the player's view is */
+			if (x1 >= x2 || x2 < now.sx1 || x1 > now.sx2)
+				continue; // Only render if it's visible
+
+			/* Acquire the floor and ceiling heights, relative to where the player's view is */
 			float yceil = sect->ceil - player.where.z;
 			float yfloor = sect->floor - player.where.z;
 			/* Check the edge type. neighbor=-1 means wall, other=boundary between two sectors. */
@@ -237,8 +240,8 @@ static void DrawScreen()
 				/* Acquire the Y coordinates for our ceiling & floor for this X coordinate. Clamp them. */
 				int ya = (x - x1) * (y2a - y1a) / (x2 - x1) + y1a, cya = clamp(ya, ytop[x], ybottom[x]); // top
 				int yb = (x - x1) * (y2b - y1b) / (x2 - x1) + y1b, cyb = clamp(yb, ytop[x], ybottom[x]); // bottom
-
-																										 /* Render ceiling: everything above this sector's ceiling height. */
+ 
+				/* Render ceiling: everything above this sector's ceiling height. */
 				vline(x, ytop[x], cya - 1, 0x111111, 0x222222, 0x111111);
 				/* Render floor: everything below this sector's floor height. */
 				vline(x, cyb + 1, ybottom[x], 0x0000FF, 0x0000AA, 0x0000FF);

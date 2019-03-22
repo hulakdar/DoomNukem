@@ -23,11 +23,11 @@ typedef struct	s_color
 
 typedef struct	s_render_state
 {
+	t_color			*pixels;
 	float			*depth_buffer;
 	SDL_Renderer	*renderer;
 	SDL_Texture		*screen_texture;
 	SDL_Window		*window;
-	t_color			*pixels;
 	int				w;
 	int				h;
 }				t_render_state;

@@ -19,6 +19,7 @@
 #define KNEE_HEIGHT 2.f
 #define HFOV (0.73f * H)
 #define VFOV (.2f * H)
+#define ARRAY_COUNT(x) (sizeof(x) / sizeof(x[0]))
 
 /*
 ** DISCLAIMER:
@@ -34,7 +35,7 @@
 */
 
 /*
-**	One sector of the map. Should be convex(!!!)
+**	One sector of the map. Should be convex(?)
 */
 typedef struct	s_sector
 {
@@ -51,13 +52,25 @@ typedef struct	s_map
 	short		*neigbours;
 }				t_map;
 
+typedef unsigned char t_byte;
+
+typedef struct	s_buttons 
+{
+	t_byte		up : 1;
+	t_byte		down : 1;
+	t_byte		left : 1;
+	t_byte		right : 1;
+}				t_buttons;
+
 typedef struct	s_player
 {
 	t_vec3		position;
 	t_vec3		velocity;
+	float		speed;
 	float		angle;
 	float		yaw;
 	short		sector;
+	t_buttons	buttons;
 }				t_player;
 
 /*

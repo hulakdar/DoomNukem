@@ -15,9 +15,9 @@ t_render_state * get_render_state(void)
 
 void	draw_loop()
 {
-	t_render_state *render_state = get_render_state();
+	t_render_state *render_state;
 
-	init_render_state();
+	render_state = init_render_state();
 	while (1)
 	{
 		for (int i = 0; i < render_state->h * render_state->w; ++i)

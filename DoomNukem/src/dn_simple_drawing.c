@@ -6,21 +6,49 @@ t_color make_color_from_int(int hex)
 	return ((t_color){ hex >> 16, hex >> 8, hex });
 }
 
-void draw_vline(t_render_state *renderable, t_simple_vline line)
+bool depth_test(t_render_state * renderable, int x, int y, float depth)
 {
-	t_color					*pixels;
-	int						y;
+	float *depth_buffer = renderable->depth_buffer;
+	depth_buffer += y * renderable->w + x;
+	if (*depth_buffer < depth)
+		return false;
+	*depth_buffer = depth;
+	return true;
+}
 
-	pixels = renderable->pixels;
+void set_color(t_vec2i point, t_color color);
+
+bool gDebug = true;
+
+void put_pixel(int x, int y, float depth, t_color color)
+{
+	t_color			*pixels;
+
+	if (depth_test(get_render_state(), x, y, depth))
+	{
+		depth = max(depth / 50, 1.5);
+		color.r /= depth;
+		color.g /= depth;
+		color.b /= depth;
+		set_color((t_vec2i) { x, y }, color);
+	}
+	else if (gDebug)
+		__debugbreak();
+}
+
+void draw_vline(t_simple_vline line)
+{
+	int						y;
+	t_render_state	*renderable;
+
+	renderable = get_render_state();
 	line.y1 = CLAMP(line.y1, 0, renderable->h);
 	line.y2 = CLAMP(line.y2, 0, renderable->h);
 	if (line.y2 < line.y1)
 		return;
 	y = line.y1;
-	pixels[(y * renderable->w) + line.x] = COLOR_GREEN;
 	while (++y < line.y2)
-		pixels[(y * renderable->w) + line.x] = line.color;
-	pixels[(y * renderable->w) + line.x] = COLOR_GREEN;
+		put_pixel(line.x, y, line.depth, line.color);
 }
 
 void del_func(void *ptr, size_t size)
@@ -47,9 +75,11 @@ void set_color(t_vec2i point, t_color color)
 	pixels[point.y * render_state->w + point.x] = color;
 }
 
-void brezenheim(t_line line, t_color color) {
+void brezenheim(t_line line, t_color color)
+{
 	bool steep = false;
-	if (fabs(line.a.x - line.b.x) < fabs(line.a.y - line.b.y)) {
+	if (fabs(line.a.x - line.b.x) < fabs(line.a.y - line.b.y))
+	{
 		ft_swapf(&line.a.x, &line.a.y);
 		ft_swapf(&line.b.x, &line.b.y);
 		steep = true;
@@ -63,7 +93,8 @@ void brezenheim(t_line line, t_color color) {
 	float derror = fabsf(dy / dx);
 	float error = 0;
 	int y = line.a.y;
-	for (int x = line.a.x; x <= line.b.x; x++) {
+	for (int x = line.a.x; x <= line.b.x; x++)
+	{
 		if (steep) {
 			set_color((t_vec2i){y, x}, color);
 		}
@@ -78,23 +109,22 @@ void brezenheim(t_line line, t_color color) {
 	}
 }
 
-void process_sector(t_list **pending_sectors)
+void process_sector(t_list **pending_sectors, t_player player)
 {
-	const t_color colors[] = {COLOR_BLUE, COLOR_GREEN, COLOR_RED, COLOR_YELLOW, COLOR_MAGENTA, COLOR_WHITE};
+	const t_color colors[] = {COLOR_BLUE, COLOR_GREEN, COLOR_RED, COLOR_YELLOW, COLOR_MAGENTA};
 	t_game_state	*game_state = get_game_state();
 	t_map			map = *game_state->current_map;
-	//t_render_state	*render_state = get_render_state();
+	t_render_state	*render_state = get_render_state();
 
 	short secnum = *(short*)(*pending_sectors)->content;
 	t_sector current_sector = map.sectors[secnum];
 	t_vec2 *sector_verts = &map.verts[current_sector.start];
 
-	const t_player player = game_state->player;
 	const t_vec2 player_pos = { player.position.x, player.position.y };
 	const float pcos = cosf(player.angle);
 	const float psin = sinf(player.angle);
 
-	const t_vec2 up = {0, -20};
+	const t_vec2 up = {0, -20000};
 
 	const t_vec2 left_v = rotate_vec2(cosf(-HFOV / 2), sinf(-HFOV / 2), up);
 	const t_vec2 right_v = rotate_vec2(cosf(HFOV / 2), sinf(HFOV / 2), up);
@@ -103,53 +133,55 @@ void process_sector(t_list **pending_sectors)
 
 	for (int i = 0; i < current_sector.length; ++i)
 	{
-		const t_line line = { sector_verts[i], sector_verts[i + 1] };
+		t_line line = { sector_verts[i], sector_verts[i + 1] };
 
 		// translating everything to player space
-		t_vec2 v1 = VEC2_SUB(line.a, player_pos);
-		t_vec2 v2 = VEC2_SUB(line.b, player_pos);
+		line.a = VEC2_SUB(line.a, player_pos);
+		line.b = VEC2_SUB(line.b, player_pos);
 
 		// rotating to player space
-		v1 = rotate_vec2(pcos, psin, v1);
-		v2 = rotate_vec2(pcos, psin, v2);
+		line.a = rotate_vec2(pcos, psin, line.a);
+		line.b = rotate_vec2(pcos, psin, line.b);
+
+		const char a_left = determine_side(line.a, left_frust);
+		const char b_left = determine_side(line.b, left_frust);
+		const char a_right = determine_side(line.a, right_frust);
+		const char b_right = determine_side(line.b, right_frust);
 
 		// filtering out walls that we don't face
-		//const bool a_left = determine_side(v1, left_frust) > 0;
-		//const bool b_left = determine_side(v2, left_frust) > 0;
-		//const bool a_right = determine_side(v2, right_frust) < 0;
-		//const bool b_right = determine_side(v2, right_frust) < 0;
-
-		//if (((a_left && b_left) | (a_right && b_right)) == 0)
-		//	continue;
-
-		const char a_left = determine_side(v1, left_frust);
-		const char b_left = determine_side(v2, left_frust);
-		const char a_right = determine_side(v2, right_frust);
-		const char b_right = determine_side(v2, right_frust);
-
-		if (a_left == a_left == b_right == b_left)
+		if ((a_left < 0 && b_left < 0)
+		|| (a_right > 0 && b_right > 0)
+		|| (line.a.y >= 0 && line.b.y >= 0))
 			continue;
 
-		
+		// frustrum clipping
+		if (a_right > 0)
+			line.a = line_intersection(line, right_frust);
+		if (b_left < 0)
+			line.b = line_intersection(line, left_frust);
 
-		// end filtering
+		// perspective projection
 
-//TODO: do frustrum clipping to avoid edges from behind leaking into view
+		int x1 = render_state->w / 2 - 1 + (line.b.x / line.b.y) * -render_state->w;
+		int x2 = render_state->w / 2 - 1 + (line.a.x / line.a.y) * -render_state->w;
 
+		x1 = CLAMP(x1, 0, render_state->w - 1);
+		x2 = CLAMP(x2, 0, render_state->w - 1);
 
-		// DEBUG MINI-MAP
+		for (int x = x1; x < x2; x++)
 		{
-			t_line local_line = { v1, v2 };
-			local_line.a.x += 400;
-			local_line.b.x += 400;
-			local_line.a.y += 300;
-			local_line.b.y += 300;
-			int col = ((a_left && b_left) | ((a_right && b_right) << 1));
-			brezenheim(local_line, colors[col]);
+			const int length = x2 - x1;
+			float alpha = (x - x1) / (float)length;
+			float delimiter = -line.a.y * alpha + -line.b.y * (1 - alpha);
+			delimiter = fabs(delimiter);
+			int height = render_state->h / delimiter;
+			height = CLAMP(height, 0, render_state->h - 1);
+			int y1 = render_state->h / 2 - 1 - height / 2;
+			int y2 = render_state->h / 2 - 1 + height / 2;
+			draw_vline((t_simple_vline) {x, 0, y1, COLOR_ANOTHER, delimiter});
+			draw_vline((t_simple_vline) {x, y1, y2, colors[i%ARRAY_COUNT(colors)], delimiter});
+			draw_vline((t_simple_vline) {x, y2, render_state->h, COLOR_WHITE, delimiter});
 		}
-		// END DEBUG MINI-MAP
-
-		// TODO: transform to screen space and draw
 	}
 	ft_lstdelone(pending_sectors, del_func);
 }
@@ -159,6 +191,7 @@ void draw_screen_simple(void)
 	t_game_state	*game_state = get_game_state();
 	t_render_state	*render_state = get_render_state();
 	t_list			*pending_sectors;
+	const t_player	player = game_state->player;
 
 	int i = 0;
 	short k = 1;
@@ -167,13 +200,5 @@ void draw_screen_simple(void)
 	pending_sectors = ft_lstnew(&game_state->player.sector, sizeof(short));
 	pending_sectors->next = ft_lstnew(&k, sizeof(short));
 	while (pending_sectors)
-		process_sector(&pending_sectors);
-	
-	const t_vec2 player_pos = { 400, 300 };
-	const t_vec2 up = {0, -20};
-	const t_vec2 left_frust = rotate_vec2(cosf(-HFOV / 2), sinf(-HFOV / 2), up);
-	const t_vec2 right_frust = rotate_vec2(cosf(HFOV / 2), sinf(HFOV / 2), up);
-	brezenheim((t_line) { player_pos, VEC2_ADD(player_pos, up) }, COLOR_WHITE);
-	brezenheim((t_line) { player_pos, VEC2_ADD(player_pos, left_frust) }, COLOR_GREEN);
-	brezenheim((t_line) { player_pos, VEC2_ADD(player_pos, right_frust) }, COLOR_GREEN);
+		process_sector(&pending_sectors, player);
 }
